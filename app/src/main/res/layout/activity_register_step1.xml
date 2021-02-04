@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterStep1Activity">
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:fontFamily="@font/product_sans"
+            android:textSize="25sp"
+            android:text="@string/app_full_name"
+            android:textStyle="bold"
+            android:textColor="#1428BF"
+            android:layout_marginTop="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/message_helper"
+            android:textColor="#303030"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/required_field"
+            android:textColor="#E74C3C"
+            />
+
+<!--        android:textColor="#FF00C853"-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="#F2F3F4" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:background="@drawable/border_primary"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:src="@drawable/user_image"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"/>
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:text="@string/photo_string"
+                android:fontFamily="@font/product_sans"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:radius="0sp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="#F2F3F4" />
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+
+            <TextView
+                android:text="@string/lastname"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/lastName"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:text="VISTAL"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/firstname"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/firstName"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:text="CHRISTOPHER"
+            android:textAllCaps="true"
+            android:inputType="textCapCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/middlename"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <EditText
+            android:id="@+id/middleName"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:text="PLATINO"
+            android:inputType="textCapCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:text="@string/name_extension"
+            android:fontFamily="@font/product_sans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/suffix"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:inputType="textCapCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/birthdate"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+
+        <EditText
+            android:id="@+id/birthDateText"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:inputType="none"
+            android:fontFamily="@font/product_sans"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/gender_label"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/gender"
+            android:padding="20dp"
+            android:layout_marginBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/gender"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/civil_status"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+
+        <Spinner
+            android:id="@+id/civil_status"
+            android:padding="20dp"
+            android:layout_marginBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/civil_status"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/phone_number"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:text="+639630711082"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:text="Landline Number"
+            android:fontFamily="@font/product_sans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:id="@+id/landline_number"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+
+        <TextView
+            android:text="@string/email_label"
+            android:fontFamily="@font/product_sans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:id="@+id/email_address"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/province_label"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/province"
+            android:padding="10dp"
+            android:inputType="none"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:layout_marginBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F2F3F4"
+            android:text="SURIGAO DEL SUR"
+
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/municipality_label"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/municipality"
+            android:padding="10dp"
+            android:inputType="none"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:layout_marginBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F2F3F4"
+            android:text="TANDAG CITY"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/barangay_label"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/barangay"
+            android:padding="10dp"
+            android:inputType="none"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:layout_marginBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F2F3F4"
+            android:text="AWASIAN"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:text="@string/purok_label"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#E74C3C"
+                android:text=" *"/>
+
+
+        </LinearLayout>
+
+
+
+
+        <EditText
+            android:id="@+id/purok"
+            android:padding="10dp"
+            android:layout_marginBottom="20sp"
+            android:singleLine="true"
+            android:inputType="textCapCharacters"
+            android:layout_width="match_parent"
+            android:text="PUROK"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@string/street_label"
+            android:fontFamily="@font/product_sans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:id="@+id/street"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:inputType="textCapCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/termsAndPrivacyCheckbox"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/termsAndPrivacy"
+                android:text="I have read and accepted the Terms of Use and Privacy Policy"
+                android:layout_gravity="top"
+                android:fontFamily="@font/product_sans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_marginTop="15dp"
+            android:text="@string/submit"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:radius="10dp"
+            android:layout_marginBottom="10sp"
+            android:fontFamily="@font/product_sans"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</ScrollView>

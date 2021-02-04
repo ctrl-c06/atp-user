@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".PreventActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:text="How can you prevent the spread of COVID-19?"
+                android:gravity="center"
+                android:fontFamily="@font/product_sans"
+                android:textSize="19sp"
+                android:textColor="#303030"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:background="#F2F3F4" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/hand_wash"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Wash your hands regularly with soap and water, or clean them with alcohol-based hand rub."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                   />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/social_distance"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Maintain at least 1 metre distance between you and people coughing or sneezing."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/avoid_touch"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Avoid touching your face."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/cough"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Cover your mouth and nose when coughing or sneezing."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/stay_at_home"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Stay home if you feel unwell."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/lung"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Refrain from smoking and other activities that weaken the lungs."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:src="@drawable/no_crowd"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Practice physical distancing by avoiding unnecessary travel and staying away from large groups of people."
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#303030"
+                    android:padding="10dp"
+                    android:fontFamily="@font/product_sans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">SurSur ATP</string>
+
+    <string name="GATEWAY_NUMBER">+639630711082</string>
+    <string name="GATEWAY_NUMBER_2">09630711082</string>
+
+
+    <string name="middlename">Middlename</string>
+    <string name="lastname">Lastname</string>
+    <string name="firstname">Firstname</string>
+    <string name="name_extension">Suffix</string>
+    <string name="submit">Create an account</string>
+    <string name="civil_status">Civil Status</string>
+    <string name="phone_number">Mobile Number</string>
+    <string name="email_label">Email</string>
+    <string name="province_label">Province</string>
+    <string name="municipality_label">Municipality</string>
+    <string name="barangay_label">Barangay</string>
+    <string name="purok_label">Purok</string>
+    <string name="street_label">Street</string>
+    <string name="age_label">Age</string>
+    <string name="generate_qr_title">TITLE</string>
+    <string name="validation_error">Required Field.</string>
+    <string name="login_validation_error">Mobile Number / MPIN is invalid!</string>
+    <string name="please_sign_in_to_continue">Please Sign in to continue</string>
+    <string name="mobile_label">Mobile Number</string>
+    <string name="password_label">MPIN</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password_hint">••••••••••••</string>
+    <string name="terms">
+
+    </string>
+    <string name="message_helper">For registration verification make sure you have enough LOAD Balance and strong signal.</string>
+    <string name="photo_string">take / attach</string>
+    <string name="enter_your_mpin">Enter your MPIN</string>
+    <string name="mpin_label">ENTER YOUR MPIN</string>
+    <string name="duplicate_phone_number">Phone Number already exists</string>
+    <string name="please_provide_your_mpin">PLEASE PROVIDE YOUR MPIN</string>
+    <string name="app_full_name"><![CDATA[ATP (Action Trace & Protect)]]></string>
+    <string name="required_field">All fields marked with an asterisk * are required</string>
+    <string name="birthdate">Date of Birth</string>
+    <string name="gender_label">Gender</string>
+    <string name="guide_text">By clicking your qr a list of option will show up.</string>
+
+
+    <string-array name="civil_status">
+        <item>Single</item>
+        <item>Single Parent</item>
+        <item>Married</item>
+        <item>Separated</item>
+        <item>Widow</item>
+        <item>Widowed</item>
+        <item>Annulled</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+</resources>
