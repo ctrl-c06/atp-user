@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,7 +76,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
         termsText.setOnClickListener(v -> termsAndPrivacyDialog());
 
 
-
         EditText firstname = findViewById(R.id.firstName);
         EditText middlename = findViewById(R.id.middleName);
         EditText lastname = findViewById(R.id.lastName);
@@ -113,6 +113,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
             String selectedProvince = arrayAdapter.getItem(which);
             spinnerProvince.setText(selectedProvince);
             spinnerMunicipality.setText("");
+            DB.getInstance(getApplicationContext()).provinceDao().getCodeByName(selectedProvince);
+
 
             initMunicipalityDialog(spinnerMunicipality, spinnerBarangay, selectedProvince);
 
@@ -226,7 +228,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
                 AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
                 confirmationDialog.setTitle("Important Message");
-                confirmationDialog.setMessage("Did you read properly the Terms of Use and Privacy Policy?");
+                confirmationDialog.setMessage("Did you properly read the Terms of Use and Privacy Policy?");
                 confirmationDialog.setNegativeButton("NO", (dialog, which) -> {
                     dialog.dismiss();
                     termsAndPrivacyDialog();
@@ -245,30 +247,32 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         return;
                     }
 
-                    User user = new User();
-                    user.setLastname(lastname.getText().toString().toUpperCase());
-                    user.setFirstname(firstname.getText().toString().toUpperCase());
-                    user.setMiddlename(middlename.getText().toString().toUpperCase());
-                    user.setSuffix(suffix.getText().toString().toUpperCase());
-                    user.setAge(userAge);
-                    user.setCivil_status(spinnerCivilStatus.getSelectedItem().toString());
-                    user.setPhone_number(phoneNumber.getText().toString());
-                    user.setEmail(email.getText().toString());
-                    user.setProvince(spinnerProvince.getText().toString());
-                    user.setMunicipality(spinnerMunicipality.getText().toString());
-                    user.setBarangay(spinnerBarangay.getText().toString());
-                    user.setPurok(purok.getText().toString());
-                    user.setStreet(street.getText().toString());
-                    user.setGender(gender.getSelectedItem().toString());
-                    user.setLandline_number(landlineNumber.getText().toString());
-                    user.setDate_of_birth(birthDateText.getText().toString());
-                    user.setOtp_code("");
-                    user.setImage(userImageLink.toString());
+//                        String birthdate = birthDateText.getText().toString();
+//                        Toast.makeText(this, PinGenerator.generate(), Toast.LENGTH_SHORT).show();
 
 
-                    DB.getInstance(this).userDao().create(user);
+                        User user = new User();
+                        user.setLastname(lastname.getText().toString().toUpperCase());
+                        user.setFirstname(firstname.getText().toString().toUpperCase());
+                        user.setMiddlename(middlename.getText().toString().toUpperCase());
+                        user.setSuffix(suffix.getText().toString().toUpperCase());
+                        user.setAge(userAge);
+                        user.setCivil_status(spinnerCivilStatus.getSelectedItem().toString());
+                        user.setPhone_number(phoneNumber.getText().toString());
+                        user.setEmail(email.getText().toString());
+                        user.setProvince(spinnerProvince.getText().toString());
+                        user.setMunicipality(spinnerMunicipality.getText().toString());
+                        user.setBarangay(spinnerBarangay.getText().toString());
+                        user.setPurok(purok.getText().toString());
+                        user.setStreet(street.getText().toString());
+                        user.setGender(gender.getSelectedItem().toString());
+                        user.setLandline_number(landlineNumber.getText().toString());
+                        user.setDate_of_birth(birthDateText.getText().toString());
+                        user.setOtp_code("");
+                        user.setImage(userImageLink.toString());
+                        DB.getInstance(this).userDao().create(user);
 
-                    this.redirectToStep2(phoneNumber);
+                        this.redirectToStep2(phoneNumber);
                 });
 
                 confirmationDialog.show();
@@ -312,7 +316,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
     }
 
     private void redirectToStep2(EditText phoneNumber) {
-        this.requestCode();
         Intent step2Activity = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
         step2Activity.putExtra("PHONE_NUMBER", phoneNumber.getText().toString());
         SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber.getText().toString());
@@ -359,8 +362,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
     }
 
     private void initMunicipalityDialog(EditText spinnerMunicipality, EditText spinnerBarangay, String selectedProvince) {
-        int province_id = DB.getInstance(this).provinceDao().getIdByName(selectedProvince);
-        ArrayAdapter<String> municipalAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(getApplicationContext()).municipalDao().findByProvince(province_id));
+        String province_code = DB.getInstance(this).provinceDao().getCodeByName(selectedProvince);
+        ArrayAdapter<String> municipalAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(getApplicationContext()).municipalDao().findByProvince(province_code));
         municipalAdapter.notifyDataSetChanged();
 
         municipalDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
@@ -383,8 +386,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
     }
 
     private void initBarangayDialog(EditText spinnerBarangay, String selectedMunicipality) {
-        int municipality_id = DB.getInstance(this).municipalDao().getIdByName(selectedMunicipality);
-        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(this).barangayDao().getByMunicipal(municipality_id));
+        String municipality_code = DB.getInstance(this).municipalDao().getIdByName(selectedMunicipality);
+        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(this).barangayDao().getByMunicipal(municipality_code));
         barangayAdapter.notifyDataSetChanged();
 
         barangayDialog = new AlertDialog.Builder(RegisterStep1Activity.this);

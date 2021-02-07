@@ -11,8 +11,8 @@ public interface BarangayDao {
     @Insert
     void create(Barangay barangay);
 
-    @Query("SELECT name from barangays WHERE municipal_id = :municipal_id")
-    String[] getByMunicipal(int municipal_id);
+    @Query("SELECT UPPER(name) from barangays WHERE city_code = :municipal_code")
+    String[] getByMunicipal(String municipal_code);
 
     @Query("SELECT name from barangays")
     String[] get();

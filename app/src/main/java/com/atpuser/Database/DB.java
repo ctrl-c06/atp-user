@@ -17,6 +17,7 @@ import com.atpuser.Database.Models.User;
 
 
 @Database(entities = {User.class, Province.class, Municipal.class, Barangay.class},version = 1)
+//@Database(entities = {User.class, Province.class, Municipal.class},version = 1)
 public abstract class DB extends RoomDatabase {
 
     private static DB appDatabase;
@@ -29,8 +30,8 @@ public abstract class DB extends RoomDatabase {
 
     public synchronized  static DB getInstance(Context context){
         if(appDatabase == null){
-            appDatabase = Room.databaseBuilder(context.getApplicationContext(), DB.class, "atp_user")
-                    .createFromAsset("atp_user.db")
+            appDatabase = Room.databaseBuilder(context.getApplicationContext(), DB.class, "atb_2")
+                    .createFromAsset("atb_2.db")
                     .allowMainThreadQueries()
                     .build();
         }

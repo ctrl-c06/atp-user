@@ -18,6 +18,8 @@ import com.atpuser.Helpers.SharedPref;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 
+import java.util.List;
+
 public class LoginActivity extends AppCompatActivity {
 
     Button btnRegister;
@@ -26,12 +28,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    List<String> test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        test = DB.getInstance(this).provinceDao().all();
         if(SharedPref.getSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", false)) {
             this.redirectToPin();
         }

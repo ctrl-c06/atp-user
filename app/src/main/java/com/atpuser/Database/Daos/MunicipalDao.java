@@ -19,9 +19,9 @@ public interface MunicipalDao {
     @Query("SELECT * FROM municipals")
     List<Municipal> get();
 
-    @Query("SELECT name FROM municipals WHERE province_id = :province_id")
-    List<String> findByProvince(int province_id);
+    @Query("SELECT name FROM municipals WHERE province_code = :province_code")
+    List<String> findByProvince(String province_code);
 
-    @Query("SELECT id FROM municipals WHERE name = :name")
-    int getIdByName(String name);
+    @Query("SELECT code FROM municipals WHERE name = :name")
+    String getIdByName(String name);
 }

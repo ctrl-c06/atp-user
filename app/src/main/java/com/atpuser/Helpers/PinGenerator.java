@@ -3,7 +3,7 @@ package com.atpuser.Helpers;
 public class PinGenerator {
     public static String generate()
     {
-        int randomPIN = (int) ( Math.random() * 900000 ) + 100000;
+        int randomPIN = (int) ( Math.random() * 998) + 100;
         return String.valueOf(randomPIN);
     }
 }

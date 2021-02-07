@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.atpuser.Database.DB;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,7 @@ public class SplashActivity extends AppCompatActivity {
             Intent mainActivity = new Intent(SplashActivity.this, LoginActivity.class);
             mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(mainActivity);
-        }, 2000);
+        }, 1000);
+
     }
 }

@@ -1,31 +1,43 @@
 package com.atpuser.Database.Models;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName ="barangays")
 public class Barangay {
-    @PrimaryKey(autoGenerate = true)
-    public int id;
+    @PrimaryKey
+    @NonNull
+    public String code;
 
-    public int municipal_id;
-    public int province_id;
+    public String province_code;
+    public String city_code;
 
     public String name;
 
 
-
-    public Barangay(int municipal_id, String name) {
-        this.municipal_id = municipal_id;
-        this.name = name;
+    public String getCode() {
+        return code;
     }
 
-    public int getMunicipal_id() {
-        return municipal_id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setMunicipal_id(int municipal_id) {
-        this.municipal_id = municipal_id;
+    public String getProvince_code() {
+        return province_code;
+    }
+
+    public void setProvince_code(String province_code) {
+        this.province_code = province_code;
+    }
+
+    public String getCity_code() {
+        return city_code;
+    }
+
+    public void setCity_code(String city_code) {
+        this.city_code = city_code;
     }
 
     public String getName() {

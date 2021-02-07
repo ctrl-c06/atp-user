@@ -16,6 +16,8 @@ public interface ProvinceDao {
     @Query("SELECT name FROM provinces")
     List<String> all();
 
-    @Query("SELECT id FROM provinces WHERE name = :name ")
-    int getIdByName(String name);
+    @Query("SELECT code FROM provinces WHERE name = :name ")
+    String getCodeByName(String name);
+
+
 }
