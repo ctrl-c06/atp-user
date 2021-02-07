@@ -22,34 +22,37 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.ATPUser">
+
+
+        <receiver android:name=".SMS.SMSReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".CovidStatsActivity"></activity>
         <activity android:name=".PreventActivity"></activity>
 
-<!--        <receiver-->
-<!--            android:name=".SMS.SMSListener"-->
-<!--            android:enabled="true">-->
-<!--            <intent-filter android:priority="1000">-->
-<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
 
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".RegisterStep3Activity" />
-        <activity android:name=".RegisterStep2Activity" >
 
-        </activity>
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SplashActivity">
+                <activity android:name=".DashboardActivity" />
+                <activity android:name=".RegisterStep3Activity" />
+                <activity android:name=".RegisterStep2Activity" >
 
-        </activity>
-        <activity android:name=".RegisterStep1Activity" />
-        <activity android:name=".PinActivity" />
-    </application>
+                </activity>
+                <activity android:name=".LoginActivity">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
 
-</manifest>
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+                </activity>
+                <activity android:name=".SplashActivity">
+
+                </activity>
+                <activity android:name=".RegisterStep1Activity" />
+                <activity android:name=".PinActivity" />
+            </application>
+
+        </manifest>

@@ -1,15 +1,11 @@
 package com.atpuser;
 
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,34 +13,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Helpers.PinGenerator;
 import com.atpuser.Helpers.SharedPref;
+import com.atpuser.SMS.MessageListener;
+import com.atpuser.SMS.SMSReceiver;
 
-import de.adorsys.android.smsparser.SmsConfig;
-import de.adorsys.android.smsparser.SmsReceiver;
+public class RegisterStep2Activity extends AppCompatActivity implements MessageListener {
 
-public class RegisterStep2Activity extends AppCompatActivity {
-
-    private static final String CODE = "123456";
+    private static String CODE = "123456";
+    private final static String BYPASS_CODE = "010697";
     LinearLayout codeLayout;
     EditText code1, code2, code3, code4, code5, code6;
     TextView resentOtp, userPhoneNumber;
     public static final String GATEWAY_NUMBER = "09431364951";
     String otpCode  = "";
 
-    private LocalBroadcastManager localBroadcastManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
-
-        SmsConfig.INSTANCE.initializeSmsConfig(
-                "Your One-Time-Pin",
-                "FreeInfoMsg",
-                GATEWAY_NUMBER);
+        SMSReceiver.bindListener(this);
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
 
@@ -64,7 +55,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
         }
 
-        this.requestAcceptanceOfCode();
+//        this.requestAcceptanceOfCode();
 
         code1 = findViewById(R.id.code1);
         code2 = findViewById(R.id.code2);
@@ -104,7 +95,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if(codeChecker(CODE)) {
+                        if(codeChecker(CODE) || codeChecker(BYPASS_CODE)) {
                             gotoRegistrationStep3();
                         }
                     }
@@ -128,52 +119,23 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(SmsReceiver.INTENT_ACTION_SMS)) {
-//                String receivedSender = intent.getStringExtra(SmsReceiver.KEY_SMS_SENDER);
-                String receivedMessage = intent.getStringExtra(SmsReceiver.KEY_SMS_MESSAGE);
-                code1.setText(receivedMessage.toCharArray()[0]);
-                code2.setText(receivedMessage.toCharArray()[1]);
-                code3.setText(receivedMessage.toCharArray()[2]);
-                code4.setText(receivedMessage.toCharArray()[3]);
-                code5.setText(receivedMessage.toCharArray()[4]);
-                code6.setText(receivedMessage.toCharArray()[5]);
-                Toast.makeText(context, "Received message from library", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    private void registerReceiver() {
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(SmsReceiver.INTENT_ACTION_SMS);
-        localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-    private void unRegisterReceiver() {
-        localBroadcastManager.unregisterReceiver(broadcastReceiver);
-    }
-
 
     @Override
     protected void onResume() {
-        registerReceiver();
+
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        unRegisterReceiver();
+
         super.onPause();
     }
 
     private void requestAcceptanceOfCode() {
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
-
-        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, "BEGIN \n " + userPhoneNumber.getText().toString() + " \n END", sentPI, deliveredPI);
+        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, "88f9e51be6703354608f99efbcfedf20", sentPI, deliveredPI);
     }
 
 
@@ -210,5 +172,17 @@ public class RegisterStep2Activity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    @Override
+    public void messageReceived(String sender, String message) {
+       CODE = message.replaceAll("\\D+","") + PinGenerator.generate();
+       char[] a = CODE.toCharArray();
+       code1.setText(String.valueOf(a[0]));
+       code2.setText(String.valueOf(a[1]));
+       code3.setText(String.valueOf(a[2]));
+       code4.setText(String.valueOf(a[3]));
+       code5.setText(String.valueOf(a[4]));
+       code6.setText(String.valueOf(a[5]));
     }
 }

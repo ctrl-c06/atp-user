@@ -5,7 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
@@ -43,12 +47,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.adorsys.android.smsparser.SmsReceiver;
+
 public class RegisterStep1Activity extends AppCompatActivity {
 
     private static final int SEND_SMS_CODE = 23;
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_IMAGE = 1;
     public static final String GATEWAY_NUMBER = "+639630711082";
+
+
 
     AlertDialog.Builder municipalDialog, barangayDialog, cameraDialog;
 
@@ -280,6 +288,11 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
         });
     }
+
+
+
+
+
 
     private void termsAndPrivacyDialog() {
         AlertDialog.Builder termsAndPolicyDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
