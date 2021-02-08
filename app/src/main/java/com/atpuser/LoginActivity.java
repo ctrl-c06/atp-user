@@ -3,6 +3,7 @@ package com.atpuser;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
@@ -30,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     List<String> test;
 
+    final int READ_SMS_PERMISSION_CODE = 1001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         if(SharedPref.getSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", false)) {
             this.redirectToPin();
         }
+
+
 
 
         // Check register stage of the user.

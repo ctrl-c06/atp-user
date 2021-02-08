@@ -46,12 +46,12 @@ public class DashboardActivity extends AppCompatActivity {
     public final static int WIDTH = 140;
     public final static int HEIGHT = 140;
 
-    public final static int TRACK_RECORDS = 0;
-    public final static int COVID_STATS = 1;
-    public final static int PREVENT_COVID = 2;
-    public final static int SIGN_OUT = 3;
+//    public final static int TRACK_RECORDS = 0;
+    public final static int COVID_STATS = 0;
+    public final static int PREVENT_COVID = 1;
+    public final static int SIGN_OUT = 2;
 
-    List<String> userOptions = new ArrayList<>(Arrays.asList("Track your records", "COVID-19 stats", "Prevent the spread of COVID-19", "Sign out"));
+    List<String> userOptions = new ArrayList<>(Arrays.asList("COVID-19 stats", "Prevent the spread of COVID-19", "Sign out"));
 
 
     AlertDialog.Builder userOptionDialog;

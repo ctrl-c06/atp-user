@@ -1,25 +1,49 @@
 package com.atpuser;
 
+import android.Manifest;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Helpers.PinGenerator;
 import com.atpuser.Helpers.SharedPref;
+import com.atpuser.Helpers.StringToASCII;
 import com.atpuser.SMS.MessageListener;
 import com.atpuser.SMS.SMSReceiver;
 
-public class RegisterStep2Activity extends AppCompatActivity implements MessageListener {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import de.adorsys.android.smsparser.SmsConfig;
+import de.adorsys.android.smsparser.SmsReceiver;
+
+public class RegisterStep2Activity extends AppCompatActivity {
 
     private static String CODE = "123456";
     private final static String BYPASS_CODE = "010697";
@@ -29,15 +53,58 @@ public class RegisterStep2Activity extends AppCompatActivity implements MessageL
     public static final String GATEWAY_NUMBER = "09431364951";
     String otpCode  = "";
 
+    private static final int FIVE_MINUTES = 1 * 60 * 1000;
 
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 5000;
+
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+//
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
-        SMSReceiver.bindListener(this);
+
+        /* code in OnCreate() method */
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
+        {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterStep2Activity.this,
+                    Manifest.permission.READ_SMS))
+            {
+                ActivityCompat.requestPermissions(RegisterStep2Activity.this,
+                        new String[] {Manifest.permission.READ_SMS}, 1);
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(RegisterStep2Activity.this,
+                        new String[] {Manifest.permission.READ_SMS}, 1);
+            }
+
+        } else {
+            // Permission for reading sms is granted.
+            fetcher();
+        }
+
+
+
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
+
+
 
 
         Bundle extra = getIntent().getExtras();
@@ -55,7 +122,8 @@ public class RegisterStep2Activity extends AppCompatActivity implements MessageL
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
         }
 
-//        this.requestAcceptanceOfCode();
+        this.requestAcceptanceOfCode();
+
 
         code1 = findViewById(R.id.code1);
         code2 = findViewById(R.id.code2);
@@ -119,18 +187,40 @@ public class RegisterStep2Activity extends AppCompatActivity implements MessageL
 
     }
 
-
-    @Override
-    protected void onResume() {
-
-        super.onResume();
+    private void fetcher() {
+        handler.postDelayed(runnable = () -> {
+            handler.postDelayed(runnable, delay);
+            fetchSMS();
+        }, delay);
     }
 
-    @Override
-    protected void onPause() {
 
-        super.onPause();
+
+    /* And a method to override */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode)
+        {
+            case 1:
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (ContextCompat.checkSelfPermission(RegisterStep2Activity.this,
+                            Manifest.permission.READ_SMS) ==  PackageManager.PERMISSION_GRANTED) {
+
+                        fetcher();
+//                        Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                    }
+                }
+//                else
+//                {
+//                    Toast.makeText(this, "No Permission granted", Toast.LENGTH_SHORT).show();
+//                }
+                break;
+        }
     }
+
+
 
     private void requestAcceptanceOfCode() {
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
@@ -140,6 +230,7 @@ public class RegisterStep2Activity extends AppCompatActivity implements MessageL
 
 
     private void gotoRegistrationStep3() {
+//        handler.removeCallbacks(runnable);
         Intent mainActivity = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
         startActivity(mainActivity);
     }
@@ -174,15 +265,55 @@ public class RegisterStep2Activity extends AppCompatActivity implements MessageL
         return false;
     }
 
-    @Override
-    public void messageReceived(String sender, String message) {
-       CODE = message.replaceAll("\\D+","") + PinGenerator.generate();
-       char[] a = CODE.toCharArray();
-       code1.setText(String.valueOf(a[0]));
-       code2.setText(String.valueOf(a[1]));
-       code3.setText(String.valueOf(a[2]));
-       code4.setText(String.valueOf(a[3]));
-       code5.setText(String.valueOf(a[4]));
-       code6.setText(String.valueOf(a[5]));
+    private String millisecondsToDate(String milliseconds)
+    {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(milliseconds));
+        String finalDateString = formatter.format(calendar.getTime());
+        return finalDateString;
+    }
+
+    public void fetchSMS() {
+        ArrayList<String> messages = new ArrayList<>();
+        Uri uri = Uri.parse("content://sms/");
+
+        ContentResolver contentResolver = getContentResolver();
+
+        String phoneNumber = "+639431364951";
+        String sms = "address='"+ phoneNumber + "'";
+        Cursor cursor = contentResolver.query(uri, new String[] { "_id", "date", "body", "type"}, sms, null,   null);
+
+
+
+        while (cursor.moveToNext()) {
+            String strbody = cursor.getString( cursor.getColumnIndex("body") );
+            String date = cursor.getString( cursor.getColumnIndex("date") );
+
+
+//            long fiveAgo = System.currentTimeMillis() - FIVE_MINUTES;
+//            if (Long.parseLong(date) > fiveAgo) {
+                messages.add(strbody);
+//            }
+
+        }
+
+        // Get the current valid code.
+        if (messages.size() != 0 && messages.get(0) != null) {
+
+            String code = messages.get(0).replaceAll("\\D+", "");
+            CODE = code;
+            char[] c = code.toCharArray();
+            if (c.length != 0) {
+                code1.setText(String.valueOf(c[0]));
+                code2.setText(String.valueOf(c[1]));
+                code3.setText(String.valueOf(c[2]));
+                code4.setText(String.valueOf(c[3]));
+                code5.setText(String.valueOf(c[4]));
+                code6.setText(String.valueOf(c[5]));
+            }
+
+        }
+
     }
 }

@@ -24,17 +24,14 @@
         android:theme="@style/Theme.ATPUser">
 
 
-        <receiver android:name=".SMS.SMSReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+<!--                <receiver android:name=".SMS.SMSReceiver" android:enabled="true" android:priority="1000">-->
+<!--                    <intent-filter>-->
+<!--                        <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+<!--                    </intent-filter>-->
+<!--                </receiver>-->
 
-        <activity android:name=".CovidStatsActivity"></activity>
-        <activity android:name=".PreventActivity"></activity>
-
-
-
+                <activity android:name=".CovidStatsActivity" />
+                <activity android:name=".PreventActivity" />
 
                 <activity android:name=".DashboardActivity" />
                 <activity android:name=".RegisterStep3Activity" />
