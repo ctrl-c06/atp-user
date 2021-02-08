@@ -278,9 +278,9 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         user.setDate_of_birth(birthDateText.getText().toString());
                         user.setOtp_code("");
                         user.setImage(userImageLink.toString());
-                        DB.getInstance(this).userDao().create(user);
+//                        DB.getInstance(this).userDao().create(user);
 
-                        this.redirectToStep2(phoneNumber);
+                        this.redirectToStep2(phoneNumber.getText().toString(), spinnerBarangay.getText().toString());
                 });
 
                 confirmationDialog.show();
@@ -328,10 +328,13 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
     }
 
-    private void redirectToStep2(EditText phoneNumber) {
+    private void redirectToStep2(String phoneNumber, String barangay) {
+        String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(barangay);
         Intent step2Activity = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
-        step2Activity.putExtra("PHONE_NUMBER", phoneNumber.getText().toString());
-        SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber.getText().toString());
+        step2Activity.putExtra("PHONE_NUMBER", phoneNumber);
+        step2Activity.putExtra("BARANGAY_CODE", barangayCode);
+        SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber);
+        SharedPref.setSharedPreferenceString(this,"USER_BARANGAY_CODE", barangayCode);
         startActivity(step2Activity);
     }
 

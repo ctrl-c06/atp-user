@@ -47,11 +47,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     private static String CODE = "123456";
     private final static String BYPASS_CODE = "010697";
+    private final static String REQUEST_CODE = "88f9e51be6703354608f99efbcfedf20";
+
     LinearLayout codeLayout;
     EditText code1, code2, code3, code4, code5, code6;
     TextView resentOtp, userPhoneNumber;
     public static final String GATEWAY_NUMBER = "09431364951";
-    String otpCode  = "";
+    String barangayCode = "";
+
+    String MESSAGE_SEPERATOR = "z";
 
     private static final int FIVE_MINUTES = 1 * 60 * 1000;
 
@@ -79,7 +83,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_register_step2);
 
         /* code in OnCreate() method */
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
         {
             if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterStep2Activity.this,
@@ -105,21 +108,19 @@ public class RegisterStep2Activity extends AppCompatActivity {
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
 
 
-
-
         Bundle extra = getIntent().getExtras();
-
         Button btnClearCode = findViewById(R.id.btnClearCode);
         resentOtp = findViewById(R.id.resendOTP);
-
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
 
         Intent intent = getIntent();
 
         if (intent.hasExtra("PHONE_NUMBER")) {
             userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
+            barangayCode = extra.getString("BARANGAY_CODE");
         } else {
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
+            barangayCode = SharedPref.getSharedPreferenceString(this, "USER_BARANGAY_CODE", "");
         }
 
         this.requestAcceptanceOfCode();
@@ -221,11 +222,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
     }
 
 
+    private String buildMessage(String barangayCode)
+    {
+        return REQUEST_CODE + MESSAGE_SEPERATOR + barangayCode;
+    }
 
     private void requestAcceptanceOfCode() {
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
-        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, "88f9e51be6703354608f99efbcfedf20", sentPI, deliveredPI);
+        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, buildMessage(barangayCode), sentPI, deliveredPI);
     }
 
 
