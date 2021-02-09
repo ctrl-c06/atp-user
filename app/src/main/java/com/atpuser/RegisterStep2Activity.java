@@ -73,7 +73,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-//
         super.onResume();
     }
 
@@ -117,6 +116,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
         if (intent.hasExtra("PHONE_NUMBER")) {
             userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
+            Toast.makeText(this, barangayCode, Toast.LENGTH_SHORT).show();
             barangayCode = extra.getString("BARANGAY_CODE");
         } else {
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
@@ -270,6 +270,12 @@ public class RegisterStep2Activity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacks(runnable);
+        super.onDestroy();
+    }
+
     private String millisecondsToDate(String milliseconds)
     {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
@@ -307,16 +313,17 @@ public class RegisterStep2Activity extends AppCompatActivity {
         if (messages.size() != 0 && messages.get(0) != null) {
 
             String code = messages.get(0).replaceAll("\\D+", "");
-            CODE = code;
-            char[] c = code.toCharArray();
-            if (c.length != 0) {
-                code1.setText(String.valueOf(c[0]));
-                code2.setText(String.valueOf(c[1]));
-                code3.setText(String.valueOf(c[2]));
-                code4.setText(String.valueOf(c[3]));
-                code5.setText(String.valueOf(c[4]));
-                code6.setText(String.valueOf(c[5]));
-            }
+//            Toast.makeText(this, messages.get(0), Toast.LENGTH_SHORT).show();
+//            CODE = code;
+//            char[] c = code.toCharArray();
+//            if (c.length != 0) {
+//                code1.setText(String.valueOf(c[0]));
+//                code2.setText(String.valueOf(c[1]));
+//                code3.setText(String.valueOf(c[2]));
+//                code4.setText(String.valueOf(c[3]));
+//                code5.setText(String.valueOf(c[4]));
+//                code6.setText(String.valueOf(c[5]));
+//            }
 
         }
 

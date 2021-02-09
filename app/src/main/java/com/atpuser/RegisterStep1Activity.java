@@ -278,7 +278,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         user.setDate_of_birth(birthDateText.getText().toString());
                         user.setOtp_code("");
                         user.setImage(userImageLink.toString());
-//                        DB.getInstance(this).userDao().create(user);
+                        DB.getInstance(this).userDao().create(user);
 
                         this.redirectToStep2(phoneNumber.getText().toString(), spinnerBarangay.getText().toString());
                 });
