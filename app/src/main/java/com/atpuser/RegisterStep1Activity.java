@@ -5,17 +5,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,7 +28,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
@@ -46,8 +41,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import de.adorsys.android.smsparser.SmsReceiver;
 
 public class RegisterStep1Activity extends AppCompatActivity {
 
@@ -255,8 +248,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         return;
                     }
 
-//                        String birthdate = birthDateText.getText().toString();
-//                        Toast.makeText(this, PinGenerator.generate(), Toast.LENGTH_SHORT).show();
 
 
                         User user = new User();
@@ -278,9 +269,9 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         user.setDate_of_birth(birthDateText.getText().toString());
                         user.setOtp_code("");
                         user.setImage(userImageLink.toString());
-                        DB.getInstance(this).userDao().create(user);
+                        long userId = DB.getInstance(this).userDao().create(user);
 
-                        this.redirectToStep2(phoneNumber.getText().toString(), spinnerBarangay.getText().toString());
+                        this.redirectToStep2(phoneNumber.getText().toString(), spinnerBarangay.getText().toString(), userId);
                 });
 
                 confirmationDialog.show();
@@ -328,13 +319,14 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
     }
 
-    private void redirectToStep2(String phoneNumber, String barangay) {
+    private void redirectToStep2(String phoneNumber, String barangay, long userId) {
         String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(barangay);
         Intent step2Activity = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
         step2Activity.putExtra("PHONE_NUMBER", phoneNumber);
         step2Activity.putExtra("BARANGAY_CODE", barangayCode);
         SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber);
         SharedPref.setSharedPreferenceString(this,"USER_BARANGAY_CODE", barangayCode);
+        SharedPref.setSharedPreferenceLong(this,"USER_ID", userId);
         startActivity(step2Activity);
     }
 
@@ -397,7 +389,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
             spinnerBarangay.setText("");
 
             this.initBarangayDialog(spinnerBarangay, selectedMunicipality);
-
         });
     }
 

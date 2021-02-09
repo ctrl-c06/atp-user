@@ -27,6 +27,7 @@ public class User {
     public String landline_number;
     public String otp_code;
     public String image;
+    public String person_second_id;
 
     public int getId() {
         return id;
@@ -178,5 +179,13 @@ public class User {
 
     public void setLandline_number(String landline_number) {
         this.landline_number = landline_number;
+    }
+
+    public String getPerson_second_id() {
+        return person_second_id;
+    }
+
+    public void setPerson_second_id(String person_second_id) {
+        this.person_second_id = person_second_id;
     }
 }

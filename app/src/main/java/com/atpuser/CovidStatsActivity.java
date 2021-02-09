@@ -12,9 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import de.adorsys.android.smsparser.SmsConfig;
-import de.adorsys.android.smsparser.SmsReceiver;
-
 public class CovidStatsActivity extends AppCompatActivity {
     private LocalBroadcastManager localBroadcastManager;
 

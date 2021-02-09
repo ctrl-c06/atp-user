@@ -41,6 +41,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText birthDateEditText = Objects.requireNonNull(getActivity()).findViewById(R.id.birthDateText);
-        birthDateEditText.setText(String.format("%d/%d/%d", day, month + 1, year));
+        birthDateEditText.setText(String.format("%02d/%02d/%02d", month + 1, day , year));
     }
 }

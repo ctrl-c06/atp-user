@@ -2,13 +2,18 @@ package com.atpuser;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -18,21 +23,32 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.atpuser.Contracts.IUserUpdateImage;
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
 import com.atpuser.Helpers.StringToASCII;
+import com.atpuser.Service.RetrofitService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import smartdevelop.ir.eram.showcaseviewlib.GuideView;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -46,12 +62,14 @@ public class DashboardActivity extends AppCompatActivity {
     public final static int WIDTH = 140;
     public final static int HEIGHT = 140;
 
-//    public final static int TRACK_RECORDS = 0;
-    public final static int COVID_STATS = 0;
-    public final static int PREVENT_COVID = 1;
-    public final static int SIGN_OUT = 2;
+    public final static int PROFILE = 0;
+    public final static int COVID_STATS = 1;
+    public final static int PREVENT_COVID = 2;
+    public final static int SIGN_OUT = 3;
 
-    List<String> userOptions = new ArrayList<>(Arrays.asList("COVID-19 stats", "Prevent the spread of COVID-19", "Sign out"));
+    ProgressDialog progressdialog;
+
+    List<String> userOptions = new ArrayList<>(Arrays.asList("Your Profile" ,"COVID-19 stats", "Prevent the spread of COVID-19", "Sign out"));
 
 
     AlertDialog.Builder userOptionDialog;
@@ -89,12 +107,21 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
+
+
+
+
         final Uri imageUri = Uri.parse(user.getImage());
         final InputStream imageStream;
         try {
             imageStream = getContentResolver().openInputStream(imageUri);
             final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
             userImage.setImageBitmap(userProfile);
+
+            if(SharedPref.getSharedPreferenceBoolean(this,"FIRST_VISIT", true)) {
+                uploadImage(imageUri);
+            }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,6 +156,7 @@ public class DashboardActivity extends AppCompatActivity {
                                                + "|" + user.getDate_of_birth()
                                                + "|" + user.getLandline_number()
                                                + "|" + user.getGender()
+                                               + "|" + user.getPerson_second_id()
                                                + "|" + "MOBILE" ;
 
             Bitmap bitmap = encodeAsBitmap(StringToASCII.convert(STR_QR));
@@ -150,12 +178,58 @@ public class DashboardActivity extends AppCompatActivity {
                    redirectToStats();
                 } else if(select == PREVENT_COVID) {
                     redirectToPinActivity();
+                } else if(select == PROFILE) {
+                    redirectToProfile();
                 }
             });
 
             userOptionDialog.show();
         });
 
+    }
+
+    private void uploadImage(Uri imageUri) {
+        progressdialog = new ProgressDialog(DashboardActivity.this);
+        progressdialog.setMessage("Getting ATP (Action Trace & Protect) ready don't close this dialog.");
+        progressdialog.setCancelable(false);
+        progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressdialog.show();
+
+        Retrofit retrofit = RetrofitService.RetrofitInstance(getApplicationContext());
+        IUserUpdateImage service = retrofit.create(IUserUpdateImage.class);
+
+        RequestBody personId = RequestBody.create(MediaType.parse("multipart/form-data"), "166819001-1");
+        MultipartBody.Part image = null;
+
+        File file = new File(getRealPathFromURI(imageUri));
+        RequestBody requsetFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        image = MultipartBody.Part.createFormData("image", file.getName(), requsetFile);
+
+        Call<ResponseBody> call = service.upload(personId, image);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressdialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(DashboardActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressdialog.dismiss();
+            }
+        });
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    private void redirectToProfile() {
+        Intent mainActivity = new Intent(DashboardActivity.this, ProfileActivity.class);
+        startActivity(mainActivity);
     }
 
     private void redirectToPinActivity() {

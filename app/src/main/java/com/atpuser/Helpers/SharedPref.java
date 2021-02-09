@@ -77,6 +77,19 @@ public class SharedPref {
     }
 
     /**
+     * Get a integer shared preference
+     * @param key - Key to look up in shared preferences.
+     * @param defValue - Default value to be returned if shared preference isn't found.
+     * @return value - String containing value of the shared preference if found.
+     */
+    public static long getSharedPreferenceLong(Context context, String key, long defValue)
+    {
+        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        return settings.getLong(key, defValue);
+    }
+
+
+    /**
      * Get a boolean shared preference
      * @param key - Key to look up in shared preferences.
      * @param defValue - Default value to be returned if shared preference isn't found.

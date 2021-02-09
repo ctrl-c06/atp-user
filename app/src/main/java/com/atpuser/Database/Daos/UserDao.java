@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void create(User user);
+    long create(User user);
 
     @Update
     void update(User user);

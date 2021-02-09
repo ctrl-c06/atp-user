@@ -2,11 +2,8 @@ package com.atpuser;
 
 import android.Manifest;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,33 +12,22 @@ import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.atpuser.Helpers.PinGenerator;
 import com.atpuser.Helpers.SharedPref;
-import com.atpuser.Helpers.StringToASCII;
-import com.atpuser.SMS.MessageListener;
-import com.atpuser.SMS.SMSReceiver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import de.adorsys.android.smsparser.SmsConfig;
-import de.adorsys.android.smsparser.SmsReceiver;
 
 public class RegisterStep2Activity extends AppCompatActivity {
 
@@ -56,8 +42,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
     String barangayCode = "";
 
     String MESSAGE_SEPERATOR = "z";
-
-    private static final int FIVE_MINUTES = 1 * 60 * 1000;
 
 
     Handler handler = new Handler();
@@ -116,7 +100,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
         if (intent.hasExtra("PHONE_NUMBER")) {
             userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
-            Toast.makeText(this, barangayCode, Toast.LENGTH_SHORT).show();
             barangayCode = extra.getString("BARANGAY_CODE");
         } else {
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
@@ -236,8 +219,8 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     private void gotoRegistrationStep3() {
 //        handler.removeCallbacks(runnable);
-        Intent mainActivity = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
-        startActivity(mainActivity);
+        Intent register3Activity = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+        startActivity(register3Activity);
     }
 
     private String replaceOtherParts(String phone) {
