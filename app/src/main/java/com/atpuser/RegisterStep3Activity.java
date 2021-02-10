@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,15 +20,12 @@ import com.atpuser.Helpers.SharedPref;
 import com.atpuser.Service.RetrofitService;
 import com.davidmiguel.numberkeyboard.NumberKeyboard;
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener;
-import com.google.gson.Gson;
-
-import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class RegisterStep3Activity extends AppCompatActivity     {
 

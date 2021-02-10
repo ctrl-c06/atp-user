@@ -119,7 +119,6 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
-            android:text="VISTAL"
             android:textAllCaps="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -154,7 +153,6 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
-            android:text="CHRISTOPHER"
             android:textAllCaps="true"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
@@ -197,7 +195,6 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:textAllCaps="true"
-            android:text="PLATINO"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -355,7 +352,6 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:inputType="phone"
-            android:text="+639630711082"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -428,7 +424,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
-            android:text="SURIGAO DEL SUR"
 
             />
 
@@ -466,7 +461,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
-            android:text="TANDAG CITY"
             />
 
         <LinearLayout
@@ -503,7 +497,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
-            android:text="AWASIAN"
             />
 
 
@@ -539,7 +532,6 @@
             android:singleLine="true"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
-            android:text="PUROK"
             android:layout_height="wrap_content"/>
 
         <TextView

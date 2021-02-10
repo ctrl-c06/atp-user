@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -213,12 +212,12 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private void requestAcceptanceOfCode() {
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
-        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, buildMessage(barangayCode), sentPI, deliveredPI);
+        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, REQUEST_CODE, sentPI, deliveredPI);
     }
 
 
     private void gotoRegistrationStep3() {
-//        handler.removeCallbacks(runnable);
+        handler.removeCallbacks(runnable);
         Intent register3Activity = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
         startActivity(register3Activity);
     }
@@ -297,16 +296,16 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
             String code = messages.get(0).replaceAll("\\D+", "");
 //            Toast.makeText(this, messages.get(0), Toast.LENGTH_SHORT).show();
-//            CODE = code;
-//            char[] c = code.toCharArray();
-//            if (c.length != 0) {
-//                code1.setText(String.valueOf(c[0]));
-//                code2.setText(String.valueOf(c[1]));
-//                code3.setText(String.valueOf(c[2]));
-//                code4.setText(String.valueOf(c[3]));
-//                code5.setText(String.valueOf(c[4]));
-//                code6.setText(String.valueOf(c[5]));
-//            }
+            CODE = code;
+            char[] c = code.toCharArray();
+            if (c.length != 0) {
+                code1.setText(String.valueOf(c[0]));
+                code2.setText(String.valueOf(c[1]));
+                code3.setText(String.valueOf(c[2]));
+                code4.setText(String.valueOf(c[3]));
+                code5.setText(String.valueOf(c[4]));
+                code6.setText(String.valueOf(c[5]));
+            }
 
         }
 
