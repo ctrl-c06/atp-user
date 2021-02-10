@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
         // Check register stage of the user.
         this.checkRegisterStageSession();
 
@@ -56,6 +55,9 @@ public class LoginActivity extends AppCompatActivity {
 
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin  = findViewById(R.id.btnLogin);
+        if(!SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", "").isEmpty()) {
+            phoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
+        }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

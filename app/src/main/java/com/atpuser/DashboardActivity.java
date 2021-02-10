@@ -94,6 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
         int userLoggedId = SharedPref.getSharedPreferenceInt(this, "USER_LOGGED_IN", 0);
         user = DB.getInstance(this).userDao().find(userLoggedId);
 
+
         ImageView userImage = findViewById(R.id.user_image);
         ImageView userQr = findViewById(R.id.user_qr);
         TextView userName = findViewById(R.id.userName);
@@ -248,6 +249,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void signOut() {
         SharedPref.setSharedPreferenceBoolean(getApplicationContext(), "IS_USER_HAS_ACCOUNT", false);
+        SharedPref.setSharedPreferenceString(getApplicationContext(), "USER_PHONE_NUMBER", user.getPhone_number());
         Intent mainActivity = new Intent(DashboardActivity.this, LoginActivity.class);
         mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainActivity);
