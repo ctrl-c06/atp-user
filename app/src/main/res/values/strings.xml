@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">SurSur ATP</string>
-<<<<<<< HEAD
 <!--    <string name="base_url">http://192.168.1.33:8000</string>-->
-=======
->>>>>>> 91e279d077d68df403893479c3d3808d76aac7a4
     <string name="base_url">http://qr-code.surigaodelsur.ph/</string>
     <string name="GATEWAY_NUMBER">+639630711082</string>
     <string name="GATEWAY_NUMBER_2">09630711082</string>
