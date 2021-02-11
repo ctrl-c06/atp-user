@@ -83,13 +83,6 @@ public class DashboardActivity extends AppCompatActivity {
         // Setting the user account
         setUserAccount();
 
-        if(!checkPermissionForReadExtertalStorage()) {
-            try {
-                requestPermissionForReadExtertalStorage();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
         int userLoggedId = SharedPref.getSharedPreferenceInt(this, "USER_LOGGED_IN", 0);
         user = DB.getInstance(this).userDao().find(userLoggedId);
@@ -291,25 +284,6 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkPermissionForReadExtertalStorage() {
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int result = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED;
-        }
-        return false;
-    }
-
-    public void requestPermissionForReadExtertalStorage() throws Exception {
-        try {
-            ActivityCompat.requestPermissions(this , new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    READ_EXTERNAL_CODE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
 
     @Override
     public void onBackPressed() {

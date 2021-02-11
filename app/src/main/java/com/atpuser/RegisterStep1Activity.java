@@ -68,7 +68,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step1);
 
-        askPermissionForSMS();
 
         termsAndPrivacy = findViewById(R.id.termsAndPrivacyCheckbox);
 
@@ -361,13 +360,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
     }
 
 
-    private void askPermissionForSMS() {
-        ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.SEND_SMS }, SEND_SMS_CODE);
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.SEND_SMS }, SEND_SMS_CODE);
-        }
-    }
 
     private void initMunicipalityDialog(EditText spinnerMunicipality, EditText spinnerBarangay, String selectedProvince) {
         String province_code = DB.getInstance(this).provinceDao().getCodeByName(selectedProvince);
