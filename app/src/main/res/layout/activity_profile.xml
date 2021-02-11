@@ -45,9 +45,9 @@
             <ImageView
                 android:id="@+id/user_image"
                 android:src="@drawable/user_image"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"/>
 
 

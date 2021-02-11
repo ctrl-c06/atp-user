@@ -311,7 +311,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                 "authorized persons to provide and effective response during this\n" +
                 "COVID-19 pandemic.\n" +
                 "\n" +
-                "You will be asked to provide basic information including your full name, gender, birth date, address, employment information, place of origin and haelth/medical history, travel history, and other information deemed necessary for the purpose of contact tracing.\n" +
+                "You will be asked to provide basic information including your full name, gender, birth date, address, employment information, place of origin and health/medical history, travel history, and other information deemed necessary for the purpose of contact tracing.\n" +
                 "\n" +
                 "By entering information asked on the form, you understand and agree to the use of the\n" +
                 "Provincial Government of Tandag City to process and disclose your data to other parties within\n" +
