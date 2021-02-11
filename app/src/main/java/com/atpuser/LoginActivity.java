@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             mAwesomeValidation.addValidation(this, R.id.password, "[0-9]+", R.string.login_validation_error);
             if(mAwesomeValidation.validate()) {
                 User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
-                if(user.getOtp_code().equals(password.getText().toString())) {
+                if(user != null && user.getOtp_code().equals(password.getText().toString())) {
                     SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
                     SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
                     redirectToDashboard();

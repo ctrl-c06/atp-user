@@ -118,8 +118,7 @@ public class DashboardActivity extends AppCompatActivity {
             imageStream = getContentResolver().openInputStream(imageUri);
             final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
             userImage.setImageBitmap(userProfile);
-
-            if(SharedPref.getSharedPreferenceBoolean(this,"FIRST_VISIT", true)) {
+            if (!SharedPref.getSharedPreferenceBoolean(this,"IS_IMAGE_UPLOAD", false)) {
                 uploadImage(imageUri);
             }
 
@@ -188,11 +187,11 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
+ 
 
     private void uploadImage(Uri imageUri) {
         progressdialog = new ProgressDialog(DashboardActivity.this);
         progressdialog.setMessage("Getting ATP (Action Trace & Protect) ready don't close this dialog.");
-        progressdialog.setCancelable(false);
         progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressdialog.show();
 
@@ -211,6 +210,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 progressdialog.dismiss();
+                SharedPref.setSharedPreferenceBoolean(getApplicationContext(), "IS_IMAGE_UPLOAD", true);
             }
 
             @Override

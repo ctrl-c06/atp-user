@@ -81,7 +81,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
         } else {
             // Permission for reading sms is granted.
-            fetcher();
+//            fetcher();
         }
 
 
@@ -168,12 +168,14 @@ public class RegisterStep2Activity extends AppCompatActivity {
             this.requestAcceptanceOfCode();
         });
 
+
+
     }
 
     private void fetcher() {
         handler.postDelayed(runnable = () -> {
             handler.postDelayed(runnable, delay);
-            fetchSMS();
+//            fetchSMS();
         }, delay);
     }
 
@@ -191,7 +193,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     if (ContextCompat.checkSelfPermission(RegisterStep2Activity.this,
                             Manifest.permission.READ_SMS) ==  PackageManager.PERMISSION_GRANTED) {
 
-                        fetcher();
+//                        fetcher();
 //                        Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
                     }
                 }
