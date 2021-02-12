@@ -65,15 +65,29 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             mAwesomeValidation.addValidation(this, R.id.phoneNumber, "^(09|\\+639)\\d{9}$", R.string.login_validation_error);
             mAwesomeValidation.addValidation(this, R.id.password, "[0-9]+", R.string.login_validation_error);
             if(mAwesomeValidation.validate()) {
-                User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
-                if(user != null && user.getOtp_code().equals(password.getText().toString())) {
-                    SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
-                    SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
-                    redirectToDashboard();
-                } else {
-                    phoneNumber.setError("Mobile Number / MPIN is invalid!");
-                    password.setError("Mobile Number / MPIN is invalid!");
+                char[] arrayPhoneNumber = phoneNumber.getText().toString().toCharArray();
+                // Check if phone number has area code.
+                if(String.valueOf(arrayPhoneNumber[0]).equals("+") && String.valueOf(arrayPhoneNumber[1]).equals("6")
+                        && String.valueOf(arrayPhoneNumber[2]).equals("3")
+                        && String.valueOf(arrayPhoneNumber[3]).equals("9")) {
+                    // process
+                    phoneNumber.getText().toString().replace("+63", "9");
+                    Toast.makeText(this, "With area code", Toast.LENGTH_SHORT).show();
+                } else if(String.valueOf(arrayPhoneNumber[0]).equals("0") && String.valueOf(arrayPhoneNumber[1]).equals("9")
+                        ) { // No Area code
+                    Toast.makeText(this, "No area code", Toast.LENGTH_SHORT).show();
                 }
+                // Check if number start with +639, 639 or 09
+
+//                User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
+//                if(user != null && user.getOtp_code().equals(password.getText().toString())) {
+//                    SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
+//                    SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
+//                    redirectToDashboard();
+//                } else {
+//                    phoneNumber.setError("Mobile Number / MPIN is invalid!");
+//                    password.setError("Mobile Number / MPIN is invalid!");
+//                }
             }
 
 

@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F3F4"
     tools:context=".CovidStatsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:padding="10dp"
         >
 
         <LinearLayout
@@ -74,51 +75,108 @@
                 android:background="#F2F3F4" />
 
 
-            <TextView
-                android:text="CONFIRMED CASE\n1,084"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+            <LinearLayout
+                android:background="@drawable/card_confirmed"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_sick_24"
+                    android:drawablePadding="5dp"
+                    android:text="CONFIRMED CASES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:text="1,133"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
 
 
-            <TextView
-                android:text="RECOVERED\n856"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+            </LinearLayout>
 
-            <TextView
-                android:text="DEATHS\n59"
+
+            <LinearLayout
                 android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+                android:background="@drawable/card_recovered"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_add_reaction_24"
+                    android:drawablePadding="5dp"
+                    android:text="RECOVERIES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:text="863"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_deaths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_mood_bad_24"
+                    android:drawablePadding="5dp"
+                    android:text="DEATHS"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:text="59"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+
+
 
 
             <!-- PHILIPPINES SECTION -->
@@ -142,51 +200,109 @@
                 android:background="#F2F3F4" />
 
 
-            <TextView
-                android:text="CONFIRMED CASE\n537,310"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+            <LinearLayout
+                android:background="@drawable/card_confirmed"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_sick_24"
+                    android:drawablePadding="5dp"
+                    android:text="CONFIRMED CASES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/philippines_confirmed_case"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
 
 
-            <TextView
-                android:text="RECOVERED\n499,798"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+            </LinearLayout>
 
-            <TextView
-                android:text="DEATHS\n11,179"
+
+            <LinearLayout
                 android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+                android:background="@drawable/card_recovered"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_add_reaction_24"
+                    android:drawablePadding="5dp"
+                    android:text="RECOVERIES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/philippines_recovered"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_deaths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_mood_bad_24"
+                    android:drawablePadding="5dp"
+                    android:text="DEATHS"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/philippines_deaths"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
+
+
 
             <!-- WORLD WIDE SECTION -->
             <TextView
@@ -209,51 +325,107 @@
                 android:background="#F2F3F4" />
 
 
-            <TextView
-                android:text="CONFIRMED CASE\n106,160,975"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+            <LinearLayout
+                android:background="@drawable/card_confirmed"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_sick_24"
+                    android:drawablePadding="5dp"
+                    android:text="CONFIRMED CASES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/world_wide_confirmed_case"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
 
 
-            <TextView
-                android:text="RECOVERED\n59,169,595"
-                android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+            </LinearLayout>
 
-            <TextView
-                android:text="DEATHS\n2,317,197"
+
+            <LinearLayout
                 android:layout_marginTop="10dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#303030"
-                android:background="@drawable/border_primary"
-                android:padding="16dp"
-                android:fontFamily="@font/product_sans"
-                android:letterSpacing="0.07"
-                android:textAlignment="center"
+                android:background="@drawable/card_recovered"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_add_reaction_24"
+                    android:drawablePadding="5dp"
+                    android:text="RECOVERIES"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/world_wide_recovered"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_deaths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="23dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_baseline_mood_bad_24"
+                    android:drawablePadding="5dp"
+                    android:text="DEATHS"
+                    android:textSize="22sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:letterSpacing="0.07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/world_wide_deaths"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="-"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nexa_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

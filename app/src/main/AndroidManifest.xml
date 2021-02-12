@@ -27,17 +27,19 @@ x`    <uses-permission android:name="android.permission.INTERNET" />
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.ATPUser">
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CovidStatsActivity" />
-        <activity android:name=".PreventActivity" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".RegisterStep3Activity"> </activity>
-        <activity android:name=".RegisterStep2Activity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".CovidStatsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".PreventActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".RegisterStep3Activity"> </activity>
+        <activity android:name=".RegisterStep2Activity"></activity>
+        <activity android:name=".LoginActivity">
+
         </activity>
         <activity android:name=".SplashActivity"></activity>
         <activity android:name=".RegisterStep1Activity">

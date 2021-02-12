@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.atpuser.ContractModels.UserRegisterRequest;
-import com.atpuser.ContractModels.UserRegisterResponse;
+import com.atpuser.ContractModels.User.UserRegisterRequest;
+import com.atpuser.ContractModels.User.UserRegisterResponse;
 import com.atpuser.Contracts.IUser;
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
