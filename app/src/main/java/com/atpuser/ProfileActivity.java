@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         EditText civil_status = findViewById(R.id.civil_status);
 
-        personID.setText(user.getPerson_second_id());
+        personID.setText("15-01755");
         lastname.setText(user.getLastname());
         firstname.setText(user.getFirstname());
         middlename.setText(user.getMiddlename());

@@ -156,6 +156,8 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
+        } else {
+            askForPermissions();
         }
     }
     @Override

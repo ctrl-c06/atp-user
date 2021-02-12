@@ -111,10 +111,9 @@ public class DashboardActivity extends AppCompatActivity {
             imageStream = getContentResolver().openInputStream(imageUri);
             final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
             userImage.setImageBitmap(userProfile);
-            if (!SharedPref.getSharedPreferenceBoolean(this,"IS_IMAGE_UPLOAD", false)) {
-                uploadImage(imageUri);
-            }
-
+//            if (!SharedPref.getSharedPreferenceBoolean(this,"IS_IMAGE_UPLOAD", false)) {
+//                uploadImage(imageUri);
+//            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
