@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RegisterStep1Activity">
 
     <LinearLayout
@@ -17,9 +18,9 @@
         <TextView
             android:fontFamily="@font/product_sans"
             android:textSize="25sp"
-            android:text="@string/app_full_name"
             android:textStyle="bold"
-            android:textColor="#1428BF"
+            android:text="@string/app_full_name"
+            android:textColor="@color/appNameColor"
             android:layout_marginTop="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -31,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:text="@string/message_helper"
-            android:textColor="#303030"
+            android:textColor="@color/textHintColor"
             />
 
 
@@ -50,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
-            android:background="#F2F3F4" />
+            android:background="@color/horizonLineColor" />
 
 
         <LinearLayout
@@ -98,6 +99,7 @@
 
             <TextView
                 android:text="@string/lastname"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -133,6 +135,7 @@
 
             <TextView
                 android:text="@string/firstname"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -170,6 +173,7 @@
 
             <TextView
                 android:text="@string/middlename"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -204,6 +208,7 @@
 
         <TextView
             android:text="@string/name_extension"
+            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -227,6 +232,7 @@
 
             <TextView
                 android:text="@string/birthdate"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -264,6 +270,7 @@
 
             <TextView
                 android:text="@string/gender_label"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -297,6 +304,7 @@
 
             <TextView
                 android:text="@string/civil_status"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -333,6 +341,7 @@
 
             <TextView
                 android:text="@string/phone_number"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -359,6 +368,7 @@
 
         <TextView
             android:text="Landline Number"
+            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -377,6 +387,7 @@
 
         <TextView
             android:text="@string/email_label"
+            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -400,6 +411,7 @@
 
             <TextView
                 android:text="@string/province_label"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -437,6 +449,7 @@
 
             <TextView
                 android:text="@string/municipality_label"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -472,6 +485,7 @@
 
             <TextView
                 android:text="@string/barangay_label"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -509,6 +523,7 @@
 
             <TextView
                 android:text="@string/purok_label"
+                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -537,6 +552,7 @@
 
         <TextView
             android:text="@string/street_label"
+            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -564,6 +580,7 @@
 
             <TextView
                 android:id="@+id/termsAndPrivacy"
+                android:textColor="@color/textColor"
                 android:text="I have read and accepted the Terms of Use and Privacy Policy"
                 android:layout_gravity="top"
                 android:fontFamily="@font/product_sans"
