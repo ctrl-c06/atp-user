@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".RegisterStep1Activity">
 
     <LinearLayout
@@ -18,9 +17,9 @@
         <TextView
             android:fontFamily="@font/product_sans"
             android:textSize="25sp"
-            android:textStyle="bold"
             android:text="@string/app_full_name"
-            android:textColor="@color/appNameColor"
+            android:textStyle="bold"
+            android:textColor="#1428BF"
             android:layout_marginTop="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -32,7 +31,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:text="@string/message_helper"
-            android:textColor="@color/textHintColor"
+            android:textColor="#303030"
             />
 
 
@@ -51,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/horizonLineColor" />
+            android:background="#F2F3F4" />
 
 
         <LinearLayout
@@ -65,10 +64,10 @@
             <ImageView
                 android:id="@+id/user_image"
                 android:src="@drawable/user_image"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
 
             <Button
                 android:id="@+id/btnCamera"
@@ -99,7 +98,7 @@
 
             <TextView
                 android:text="@string/lastname"
-                android:textColor="@color/textColor"
+                android:textColor="#303030"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -122,6 +121,8 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:textAllCaps="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -134,8 +135,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/firstname"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -158,6 +159,8 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:textAllCaps="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -172,8 +175,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/middlename"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -200,6 +203,8 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:textAllCaps="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -207,8 +212,8 @@
 
 
         <TextView
+            android:textColor="#303030"
             android:text="@string/name_extension"
-            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -218,6 +223,8 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -231,8 +238,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/birthdate"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -255,6 +262,8 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:inputType="none"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
             android:focusable="false"
@@ -269,8 +278,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/gender_label"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -303,8 +312,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/civil_status"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -340,8 +349,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/phone_number"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -362,13 +371,15 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:inputType="phone"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 
         <TextView
+            android:textColor="#303030"
             android:text="Landline Number"
-            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -379,6 +390,8 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -386,8 +399,8 @@
 
 
         <TextView
+            android:textColor="#303030"
             android:text="@string/email_label"
-            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -398,6 +411,8 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -410,8 +425,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/province_label"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -448,8 +463,8 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/municipality_label"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -484,8 +499,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/barangay_label"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -522,8 +537,8 @@
 
 
             <TextView
+                android:textColor="#303030"
                 android:text="@string/purok_label"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -546,13 +561,15 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:textColor="#303030"
             android:text="@string/street_label"
-            android:textColor="@color/textColor"
             android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -562,6 +579,8 @@
             android:id="@+id/street"
             android:padding="10dp"
             android:singleLine="true"
+            android:backgroundTint="@color/purple_500"
+            android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -580,7 +599,6 @@
 
             <TextView
                 android:id="@+id/termsAndPrivacy"
-                android:textColor="@color/textColor"
                 android:text="I have read and accepted the Terms of Use and Privacy Policy"
                 android:layout_gravity="top"
                 android:fontFamily="@font/product_sans"

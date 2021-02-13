@@ -32,8 +32,8 @@
             android:gravity="center_horizontal"
             android:fontFamily="@font/product_sans"
             android:layout_marginTop="5dp"
+            android:textColor="#5000CA"
             android:text="@string/app_full_name"
-            android:textColor="@color/appNameColor"
             />
 
 
@@ -101,7 +101,7 @@
            android:layout_marginBottom="12dp"
            android:fontFamily="@font/product_sans"
            android:hint="+639196393499"
-           android:textColorHint="@color/textHintColor"
+           android:inputType="phone"
            android:background="@drawable/textbox"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>
@@ -125,7 +125,6 @@
            android:fontFamily="@font/product_sans"
            android:background="@drawable/textbox"
            android:hint="@string/password_hint"
-           android:textColorHint="@color/textHintColor"
            android:inputType="textPassword"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"

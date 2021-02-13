@@ -1,13 +1,11 @@
 package com.atpuser;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -40,7 +37,6 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -49,22 +45,19 @@ import java.util.List;
 
 public class RegisterStep1Activity extends AppCompatActivity {
 
-    private static final int SEND_SMS_CODE = 23;
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_IMAGE = 1;
     public static final String GATEWAY_NUMBER = "+639630711082";
 
 
 
-    AlertDialog.Builder municipalDialog, barangayDialog, cameraDialog;
+
+    AlertDialog.Builder municipalDialog, barangayDialog;
 
     ImageView user_image;
     Uri userImageLink = null;
 
     CheckBox termsAndPrivacy;
-
-    boolean isTermDialogAlreadyOpen = false;
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -311,7 +304,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                 "authorized persons to provide and effective response during this\n" +
                 "COVID-19 pandemic.\n" +
                 "\n" +
-                "You will be asked to provide basic information including your full name, gender, birth date, address, employment information, place of origin and haelth/medical history, travel history, and other information deemed necessary for the purpose of contact tracing.\n" +
+                "You will be asked to provide basic information including your full name, gender, birth date, address, employment information, place of origin and health/medical history, travel history, and other information deemed necessary for the purpose of contact tracing.\n" +
                 "\n" +
                 "By entering information asked on the form, you understand and agree to the use of the\n" +
                 "Provincial Government of Tandag City to process and disclose your data to other parties within\n" +
@@ -428,5 +421,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
             spinnerBarangay.setText(selectedBarangay);
         });
     }
+
 
 }

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -64,27 +65,8 @@ public class RegisterStep2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
 
-        /* code in OnCreate() method */
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterStep2Activity.this,
-                    Manifest.permission.READ_SMS))
-            {
-                ActivityCompat.requestPermissions(RegisterStep2Activity.this,
-                        new String[] {Manifest.permission.READ_SMS}, 1);
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(RegisterStep2Activity.this,
-                        new String[] {Manifest.permission.READ_SMS}, 1);
-            }
 
-        } else {
-            // Permission for reading sms is granted.
-//            fetcher();
-        }
-
-
+        fetcher();
 
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
@@ -164,9 +146,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         });
 
 
-        resentOtp.setOnClickListener(v -> {
-            this.requestAcceptanceOfCode();
-        });
+        resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
 
 
 
@@ -175,35 +155,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private void fetcher() {
         handler.postDelayed(runnable = () -> {
             handler.postDelayed(runnable, delay);
-//            fetchSMS();
+            fetchSMS();
         }, delay);
     }
 
-
-
-    /* And a method to override */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode)
-        {
-            case 1:
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    if (ContextCompat.checkSelfPermission(RegisterStep2Activity.this,
-                            Manifest.permission.READ_SMS) ==  PackageManager.PERMISSION_GRANTED) {
-
-//                        fetcher();
-//                        Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-                    }
-                }
-//                else
-//                {
-//                    Toast.makeText(this, "No Permission granted", Toast.LENGTH_SHORT).show();
-//                }
-                break;
-        }
-    }
 
 
     private String buildMessage(String barangayCode)
@@ -297,17 +252,18 @@ public class RegisterStep2Activity extends AppCompatActivity {
         if (messages.size() != 0 && messages.get(0) != null) {
 
             String code = messages.get(0).replaceAll("\\D+", "");
-//            Toast.makeText(this, messages.get(0), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, messages.get(0), Toast.LENGTH_SHORT).show();
             CODE = code;
             char[] c = code.toCharArray();
-            if (c.length != 0) {
-                code1.setText(String.valueOf(c[0]));
-                code2.setText(String.valueOf(c[1]));
-                code3.setText(String.valueOf(c[2]));
-                code4.setText(String.valueOf(c[3]));
-                code5.setText(String.valueOf(c[4]));
-                code6.setText(String.valueOf(c[5]));
-            }
+
+//            if (c.length != 0) {
+//                code1.setText(String.valueOf(c[0]));
+//                code2.setText(String.valueOf(c[1]));
+//                code3.setText(String.valueOf(c[2]));
+//                code4.setText(String.valueOf(c[3]));
+//                code5.setText(String.valueOf(c[4]));
+//                code6.setText(String.valueOf(c[5]));
+//            }
 
         }
 

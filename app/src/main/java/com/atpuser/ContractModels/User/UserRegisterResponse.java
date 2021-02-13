@@ -1,4 +1,4 @@
-package com.atpuser.ContractModels;
+package com.atpuser.ContractModels.User;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

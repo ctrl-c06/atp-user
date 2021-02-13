@@ -32,6 +32,7 @@ public class SharedPref {
         editor.apply();
     }
 
+
     public static void setSharedPreferenceLong(Context context, String key, long value)
     {
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
@@ -75,6 +76,20 @@ public class SharedPref {
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         return settings.getInt(key, defValue);
     }
+
+    /**
+     * Get a integer shared preference
+     * @param key - Key to look up in shared preferences.
+     * @param defValue - Default value to be returned if shared preference isn't found.
+     * @return value - String containing value of the shared preference if found.
+     */
+    public static long getSharedPreferenceDouble(Context context, String key, long defValue)
+    {
+        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        return settings.getLong(key, defValue);
+    }
+
+
 
     /**
      * Get a integer shared preference

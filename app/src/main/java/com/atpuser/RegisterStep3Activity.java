@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.atpuser.ContractModels.UserRegisterRequest;
-import com.atpuser.ContractModels.UserRegisterResponse;
+import com.atpuser.ContractModels.User.UserRegisterRequest;
+import com.atpuser.ContractModels.User.UserRegisterResponse;
 import com.atpuser.Contracts.IUser;
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
@@ -100,7 +100,8 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                             SharedPref.setSharedPreferenceInt(getApplicationContext(), "USER_LOGGED_IN", user.getId());
 
                             // Retrofit Request here..
-                            sendToServer();
+//                            sendToServer();
+                            redirectToDashboard();
                         } else {
                             code.setError("MPin not match!");
                             Toast.makeText(RegisterStep3Activity.this, "First and Confirmed MPIN not Match!", Toast.LENGTH_SHORT).show();
@@ -153,9 +154,7 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                     user.setPerson_second_id(response.body().getPerson_id());
                     // Update the user person id.
                     DB.getInstance(getApplicationContext()).userDao().update(user);
-                    Intent dashboardActivity = new Intent(RegisterStep3Activity.this, DashboardActivity.class);
-                    dashboardActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(dashboardActivity);
+                    redirectToDashboard();
                 }
 
                 @Override
@@ -169,6 +168,12 @@ public class RegisterStep3Activity extends AppCompatActivity     {
             Toast.makeText(this, "Oops something went wrong.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void redirectToDashboard() {
+        Intent dashboardActivity = new Intent(RegisterStep3Activity.this, DashboardActivity.class);
+        dashboardActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(dashboardActivity);
     }
 
     private void erase() {

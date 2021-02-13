@@ -1,7 +1,7 @@
 package com.atpuser.Contracts;
 
-import com.atpuser.ContractModels.UserRegisterRequest;
-import com.atpuser.ContractModels.UserRegisterResponse;
+import com.atpuser.ContractModels.User.UserRegisterRequest;
+import com.atpuser.ContractModels.User.UserRegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
