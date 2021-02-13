@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/personID"
                 android:text="15-01755"
-                android:fontFamily="@font/nexa_bold"
+                android:fontFamily="@font/product_sans"
                 android:textColor="#303030"
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"
@@ -92,7 +92,7 @@
             android:singleLine="true"
             android:textAllCaps="true"
             android:textColor="@color/textColor"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
             android:background="#F2F3F4"
             android:focusable="false"
@@ -130,7 +130,7 @@
             android:textIsSelectable="true"
             android:textColor="@color/textColor"
             android:background="#F2F3F4"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textAllCaps="true"
             android:focusable="false"
             android:inputType="none"
@@ -168,7 +168,7 @@
             android:padding="12dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textAllCaps="true"
             android:textColor="@color/textColor"
             android:textIsSelectable="true"
@@ -191,7 +191,7 @@
             android:id="@+id/suffix"
             android:padding="12dp"
             android:layout_marginBottom="20sp"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:focusable="false"
@@ -229,7 +229,7 @@
             android:focusable="false"
             android:inputType="none"
             android:textColor="@color/textColor"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:background="#F2F3F4"
@@ -265,7 +265,7 @@
             android:layout_width="match_parent"
             android:background="#F2F3F4"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
             />
 
@@ -302,7 +302,7 @@
             android:textIsSelectable="true"
             android:background="#F2F3F4"
             android:inputType="none"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             />
 
 
@@ -336,7 +336,7 @@
             android:background="#F2F3F4"
             android:textColor="@color/textColor"
             android:textIsSelectable="true"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -359,7 +359,7 @@
             android:textIsSelectable="true"
             android:textColor="@color/textColor"
             android:inputType="none"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -383,7 +383,7 @@
             android:background="#F2F3F4"
             android:theme="@color/purple_500"
             android:textColor="@color/textColor"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -419,7 +419,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
             android:background="#F2F3F4"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:text="SURIGAO DEL SUR"
 
             />
@@ -455,7 +455,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
             android:background="#F2F3F4"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:text="TANDAG CITY"
             />
 
@@ -490,7 +490,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
             android:background="#F2F3F4"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:text="AWASIAN"
             />
 
@@ -528,7 +528,7 @@
             android:background="#F2F3F4"
             android:focusable="false"
             android:inputType="none"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -548,7 +548,7 @@
             android:inputType="none"
             android:focusable="false"
             android:background="#F2F3F4"
-            android:fontFamily="@font/nexa_bold"
+            android:fontFamily="@font/product_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

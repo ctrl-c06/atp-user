@@ -89,20 +89,26 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                         if(firstPinInput.equals(code.getText().toString())) {
                             // Update the otp pin of user
                             String userPhone = SharedPref.getSharedPreferenceString(getApplicationContext(), "USER_PHONE_NUMBER", "");
-                            User user = DB.getInstance(getApplicationContext()).userDao().findByPhone(userPhone);
-                            Toast.makeText(RegisterStep3Activity.this, user.getFirstname(), Toast.LENGTH_SHORT).show();
-                            user.setOtp_code(code.getText().toString());
-                            DB.getInstance(getApplicationContext()).userDao().update(user);
+                            String personId = SharedPref.getSharedPreferenceString(getApplicationContext(), "PERSON_ID", "");
+                            if(!personId.isEmpty()) {
 
-//                             Clear the stage of the Registration.
-                            SharedPref.setSharedPreferenceInt(getApplicationContext(), "REGISTER_STAGE", 0);
+                                User user = DB.getInstance(getApplicationContext()).userDao().findByPhone(userPhone);
+                                user.setOtp_code(code.getText().toString());
+                                user.setPerson_second_id(personId);
+                                DB.getInstance(getApplicationContext()).userDao().update(user);
 
-//                             Save the user as logged in.
-                            SharedPref.setSharedPreferenceInt(getApplicationContext(), "USER_LOGGED_IN", user.getId());
 
-//                             Retrofit Request here..
-//                            sendToServer();
-                            redirectToDashboard();
+                                //  Clear the stage of the Registration.
+                                SharedPref.setSharedPreferenceInt(getApplicationContext(), "REGISTER_STAGE", 0);
+
+                                // Save the user as logged in.
+                                SharedPref.setSharedPreferenceInt(getApplicationContext(), "USER_LOGGED_IN", user.getId());
+
+                                redirectToDashboard();
+                            } else {
+                                Toast.makeText(RegisterStep3Activity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
                             code.setError("MPin not match!");
                             Toast.makeText(RegisterStep3Activity.this, "First and Confirmed MPIN not Match!", Toast.LENGTH_SHORT).show();

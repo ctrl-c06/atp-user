@@ -1,10 +1,11 @@
 package com.atpuser;
 
-import android.Manifest;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,15 +13,13 @@ import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Helpers.SharedPref;
 
@@ -28,10 +27,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
+import de.adorsys.android.smsparser.SmsConfig;
+import de.adorsys.android.smsparser.SmsReceiver;
 
 public class RegisterStep2Activity extends AppCompatActivity {
 
-    private static String CODE = "123456";
+
+    private LocalBroadcastManager localBroadcastManager;
+
+    private static String CODE = "";
+    private static String PERSON_ID = "";
     private final static String BYPASS_CODE = "010697";
     private final static String REQUEST_CODE = "88f9e51be6703354608f99efbcfedf20";
 
@@ -52,11 +59,14 @@ public class RegisterStep2Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         handler.removeCallbacks(runnable);
+        unRegisterReceiver();
+
         super.onPause();
     }
 
     @Override
     protected void onResume() {
+        registerReceiver();
         super.onResume();
     }
 
@@ -65,9 +75,8 @@ public class RegisterStep2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
 
-
+        initSMSReceiver();
         fetcher();
-
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
 
@@ -140,7 +149,33 @@ public class RegisterStep2Activity extends AppCompatActivity {
         resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
 
 
+    }
 
+    private void initSMSReceiver() {
+        SmsConfig.INSTANCE.initializeSmsConfig(
+                "",
+                "", "09431364951", "+639431364951");
+    }
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SmsReceiver.INTENT_ACTION_SMS)) {
+                fetchSMS();
+            }
+        }
+    };
+
+
+    private void registerReceiver() {
+        localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsReceiver.INTENT_ACTION_SMS);
+        localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void unRegisterReceiver() {
+        localBroadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
     private void fetcher() {
@@ -167,6 +202,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private void gotoRegistrationStep3() {
         handler.removeCallbacks(runnable);
         Intent register3Activity = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+        SharedPref.setSharedPreferenceString(this, "PERSON_ID", PERSON_ID);
         startActivity(register3Activity);
     }
 
@@ -206,17 +242,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private String millisecondsToDate(String milliseconds)
-    {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.parseLong(milliseconds));
-        String finalDateString = formatter.format(calendar.getTime());
-        return finalDateString;
-    }
 
     public void fetchSMS() {
         ArrayList<String> messages = new ArrayList<>();
+        ArrayList<String> messagesTime = new ArrayList<>();
         Uri uri = Uri.parse("content://sms/");
 
         ContentResolver contentResolver = getContentResolver();
@@ -230,33 +259,37 @@ public class RegisterStep2Activity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             String strbody = cursor.getString( cursor.getColumnIndex("body") );
             String date = cursor.getString( cursor.getColumnIndex("date") );
-
-
-//            long fiveAgo = System.currentTimeMillis() - FIVE_MINUTES;
-//            if (Long.parseLong(date) > fiveAgo) {
-                messages.add(strbody);
-//            }
+            messagesTime.add(date);
+            messages.add(strbody);
 
         }
 
         // Get the current valid code.
         if (messages.size() != 0 && messages.get(0) != null) {
+            long codeMinutePassed = minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis());
 
             String code = messages.get(0).replaceAll("\\D+", "");
-            Toast.makeText(this, messages.get(0), Toast.LENGTH_SHORT).show();
-            CODE = code;
-            char[] c = code.toCharArray();
+            // get the 6 digits MPIN
+            String MPIN = code.substring(0, 6);
+            PERSON_ID = code.substring(6);
 
-//            if (c.length != 0) {
-//                code1.setText(String.valueOf(c[0]));
-//                code2.setText(String.valueOf(c[1]));
-//                code3.setText(String.valueOf(c[2]));
-//                code4.setText(String.valueOf(c[3]));
-//                code5.setText(String.valueOf(c[4]));
-//                code6.setText(String.valueOf(c[5]));
-//            }
+            CODE = MPIN;
+            char[] c = MPIN.toCharArray();
+
+            if (c.length != 0 && codeMinutePassed <= 5) {
+                code1.setText(String.valueOf(c[0]));
+                code2.setText(String.valueOf(c[1]));
+                code3.setText(String.valueOf(c[2]));
+                code4.setText(String.valueOf(c[3]));
+                code5.setText(String.valueOf(c[4]));
+                code6.setText(String.valueOf(c[5]));
+            }
 
         }
+    }
 
+    public long minutesBetween(Long LAST_FETCH_TIME, Long CURRENT_TIME ) {
+        long diffInMillis = CURRENT_TIME - LAST_FETCH_TIME;
+        return TimeUnit.MILLISECONDS.toMinutes(diffInMillis);
     }
 }

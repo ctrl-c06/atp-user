@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atpuser.Database.DB;
+import com.atpuser.Database.Models.Barangay;
 import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
 
@@ -19,6 +20,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         int userId = Integer.parseInt(String.valueOf(SharedPref.getSharedPreferenceLong(this, "USER_ID", 0)));
         User user = DB.getInstance(this).userDao().find(userId);
+        String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(user.getBarangay());
+
+
 
         ImageView user_image = findViewById(R.id.user_image);
         TextView personID = findViewById(R.id.personID);
@@ -38,8 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         EditText barangay = findViewById(R.id.barangay);
 
         EditText civil_status = findViewById(R.id.civil_status);
-
-        personID.setText("15-01755");
+        personID.setText(String.format("%s-%s", barangayCode, user.getPerson_second_id()));
         lastname.setText(user.getLastname());
         firstname.setText(user.getFirstname());
         middlename.setText(user.getMiddlename());
@@ -57,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         barangay.setText(user.getBarangay());
 
 
-        user_image.setImageBitmap(StringToBitMap.convert(user.getImage()));
 
 
     }

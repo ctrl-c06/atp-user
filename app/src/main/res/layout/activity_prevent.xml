@@ -56,14 +56,13 @@
 
                 <TextView
                     android:text="Wash your hands regularly with soap and water, or clean them with alcohol-based hand rub."
-                    android:layout_marginTop="10dp"
                     android:textSize="16sp"
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:fontFamily="@font/nexa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                    />
 
             </LinearLayout>
@@ -91,7 +90,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -121,7 +120,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -150,7 +149,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -179,7 +178,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -209,7 +208,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
@@ -239,7 +238,7 @@
                     android:background="#FFFFFF"
                     android:textColor="#303030"
                     android:padding="10dp"
-                    android:fontFamily="@font/product_sans"
+                    android:fontFamily="@font/nexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />

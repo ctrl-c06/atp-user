@@ -26,10 +26,14 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.ATPUser">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity">
+
+        </activity>
         <activity android:name=".CovidStatsActivity">
         </activity>
-        <activity android:name=".PreventActivity" />
+        <activity android:name=".PreventActivity">
+
+        </activity>
         <activity android:name=".DashboardActivity" />
         <activity android:name=".RegisterStep3Activity"> </activity>
         <activity android:name=".RegisterStep2Activity">
