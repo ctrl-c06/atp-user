@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -45,6 +46,9 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,12 +112,10 @@ public class DashboardActivity extends AppCompatActivity {
         final Uri imageUri = Uri.parse(user.getImage());
         final InputStream imageStream;
         try {
+
             imageStream = getContentResolver().openInputStream(imageUri);
             final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
             userImage.setImageBitmap(userProfile);
-//            if (!SharedPref.getSharedPreferenceBoolean(this,"IS_IMAGE_UPLOAD", false)) {
-//                uploadImage(imageUri);
-//            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -179,7 +181,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
- 
+
 
     private void uploadImage(Uri imageUri) {
         progressdialog = new ProgressDialog(DashboardActivity.this);
@@ -298,6 +300,5 @@ public class DashboardActivity extends AppCompatActivity {
 
         mBackPressed = System.currentTimeMillis();
     }
-
 
 }

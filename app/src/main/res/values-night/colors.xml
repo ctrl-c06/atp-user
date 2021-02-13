@@ -11,7 +11,7 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="appNameColor">#5000CA</color>
+    <color name="appPrimaryColor">#5000CA</color>
     <color name="secondaryAppNameColor">#0DA4F3</color>
     <color name="horizonLineColor">#0DA4F3</color>
     <color name="textHintColor">#808080</color>

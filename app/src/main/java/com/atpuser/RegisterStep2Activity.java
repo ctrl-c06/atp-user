@@ -73,7 +73,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
 
         Bundle extra = getIntent().getExtras();
-        Button btnClearCode = findViewById(R.id.btnClearCode);
         resentOtp = findViewById(R.id.resendOTP);
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
 
@@ -136,14 +135,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
             }
         }
 
-        btnClearCode.setOnClickListener(v -> {
-            for(int i = 0; i<childCount; i++) {
-                if (codeLayout.getChildAt(i) instanceof EditText) {
-                    ((EditText) codeLayout.getChildAt(i)).setText("");
-                }
-            }
-            findViewById(R.id.code1).requestFocus();
-        });
 
 
         resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());

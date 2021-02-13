@@ -10,8 +10,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="appNameColor">#5000CA</color>
+    <color name="appPrimaryColor">#5000CA</color>
     <color name="secondaryAppNameColor">#5000CA</color>
+    <color name="teriaryColor">#FF3700B3</color>
     <color name="horizonLineColor">#F2F3F4</color>
     <color name="textHintColor">#808080</color>
     <color name="textColor">#303030</color>

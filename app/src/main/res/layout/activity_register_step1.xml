@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RegisterStep1Activity">
 
     <LinearLayout
@@ -31,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:text="@string/message_helper"
-            android:textColor="#303030"
+            android:textColor="@color/textColor"
             />
 
 
@@ -72,6 +73,8 @@
             <Button
                 android:id="@+id/btnCamera"
                 android:text="@string/photo_string"
+                android:backgroundTint="@color/appPrimaryColor"
+                android:theme="@color/appPrimaryColor"
                 android:fontFamily="@font/product_sans"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
@@ -124,6 +127,7 @@
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
+            android:textColor="@color/textColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -160,6 +164,7 @@
             android:singleLine="true"
             android:textAllCaps="true"
             android:backgroundTint="@color/purple_500"
+            android:textColor="@color/textColor"
             android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
@@ -204,6 +209,7 @@
             android:singleLine="true"
             android:textAllCaps="true"
             android:backgroundTint="@color/purple_500"
+            android:textColor="@color/textColor"
             android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
@@ -224,6 +230,7 @@
             android:layout_marginBottom="20sp"
             android:singleLine="true"
             android:backgroundTint="@color/purple_500"
+            android:textColor="@color/textColor"
             android:theme="@color/purple_500"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
@@ -263,6 +270,7 @@
             android:singleLine="true"
             android:inputType="none"
             android:backgroundTint="@color/purple_500"
+            android:textColor="@color/textColor"
             android:theme="@color/purple_500"
             android:fontFamily="@font/product_sans"
             android:textIsSelectable="true"
@@ -301,6 +309,8 @@
             android:layout_marginBottom="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:background="#F2F3F4"
             android:entries="@array/gender"/>
 
 
@@ -337,6 +347,8 @@
             android:layout_marginBottom="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:background="#F2F3F4"
             android:entries="@array/civil_status"/>
 
 
@@ -373,6 +385,7 @@
             android:inputType="phone"
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
+            android:textColor="@color/textColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -390,8 +403,10 @@
             android:padding="10dp"
             android:layout_marginBottom="20sp"
             android:singleLine="true"
+            android:inputType="phone"
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
+            android:textColor="@color/textColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -413,6 +428,7 @@
             android:singleLine="true"
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
+            android:textColor="@color/textColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -452,6 +468,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
+            android:textColor="@color/textColor"
 
             />
 
@@ -490,6 +507,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
+            android:textColor="@color/textColor"
             />
 
         <LinearLayout
@@ -527,6 +545,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F2F3F4"
+            android:textColor="@color/textColor"
             />
 
 
@@ -563,6 +582,7 @@
             android:singleLine="true"
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
+            android:textColor="@color/textColor"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -581,6 +601,7 @@
             android:singleLine="true"
             android:backgroundTint="@color/purple_500"
             android:theme="@color/purple_500"
+            android:textColor="@color/textColor"
             android:inputType="textCapCharacters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -602,6 +623,7 @@
                 android:text="I have read and accepted the Terms of Use and Privacy Policy"
                 android:layout_gravity="top"
                 android:fontFamily="@font/product_sans"
+                android:textColor="@color/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -613,6 +635,8 @@
             android:layout_marginTop="15dp"
             android:text="@string/submit"
             android:textColor="#FFFFFF"
+            android:backgroundTint="@color/appPrimaryColor"
+            android:theme="@color/appPrimaryColor"
             android:textSize="16sp"
             android:radius="10dp"
             android:layout_marginBottom="10sp"

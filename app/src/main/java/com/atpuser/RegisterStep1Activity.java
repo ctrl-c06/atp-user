@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.telephony.SmsManager;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -58,6 +61,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
     Uri userImageLink = null;
 
     CheckBox termsAndPrivacy;
+    Bitmap selectedImage;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -84,15 +88,36 @@ public class RegisterStep1Activity extends AppCompatActivity {
         EditText email = findViewById(R.id.email_address);
         EditText purok = findViewById(R.id.purok);
         EditText street = findViewById(R.id.street);
-        Spinner gender = findViewById(R.id.gender);
-
-        user_image = findViewById(R.id.user_image);
-
-
-        Spinner spinnerCivilStatus = findViewById(R.id.civil_status);
         EditText spinnerProvince = findViewById(R.id.province);
         EditText spinnerMunicipality = findViewById(R.id.municipality);
         EditText spinnerBarangay = findViewById(R.id.barangay);
+
+        user_image = findViewById(R.id.user_image);
+
+        Spinner gender = findViewById(R.id.gender);
+        Spinner spinnerCivilStatus = findViewById(R.id.civil_status);
+        
+        // Change the text color of spinner whenever the user select an item.
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        spinnerCivilStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
 
 
         AlertDialog.Builder provinceDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
@@ -171,6 +196,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                // Picking image
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
+                photoPickerIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivityForResult(photoPickerIntent, PICK_IMAGE);
             }
         });
@@ -246,8 +272,10 @@ public class RegisterStep1Activity extends AppCompatActivity {
                     }
 
 
-
                         User user = new User();
+
+
+
                         user.setLastname(lastname.getText().toString().toUpperCase());
                         user.setFirstname(firstname.getText().toString().toUpperCase());
                         user.setMiddlename(middlename.getText().toString().toUpperCase());
@@ -276,6 +304,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
         });
     }
+
+
 
 
 
@@ -347,8 +377,9 @@ public class RegisterStep1Activity extends AppCompatActivity {
             try {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                selectedImage = BitmapFactory.decodeStream(imageStream);
                 userImageLink = imageUri;
+
                 user_image.setImageBitmap(selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

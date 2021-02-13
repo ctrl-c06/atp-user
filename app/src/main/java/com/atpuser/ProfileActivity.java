@@ -2,23 +2,14 @@ package com.atpuser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
-
-import org.w3c.dom.Text;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -65,15 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
         municipality.setText(user.getMunicipality());
         barangay.setText(user.getBarangay());
 
-        final Uri imageUri = Uri.parse(user.getImage());
-        final InputStream imageStream;
-        try {
-            imageStream = getContentResolver().openInputStream(imageUri);
-            final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
-            user_image.setImageBitmap(userProfile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        user_image.setImageBitmap(StringToBitMap.convert(user.getImage()));
+
 
     }
 }

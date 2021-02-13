@@ -56,15 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-<!--        <TextView-->
-<!--            android:text="Please check your SMS and enter\nOTP to activate your account."-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            android:textColor="#303030"-->
-<!--            android:textSize="19sp"-->
-<!--            android:fontFamily="@font/product_sans"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"/>-->
 
         <LinearLayout
             android:id="@+id/codeLayout"
@@ -73,10 +64,6 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-<!--            android:inputType="none"-->
-<!--            android:textIsSelectable="true"-->
-<!--            android:focusable="false"-->
-<!--            -->
             <EditText
                 android:id="@+id/code1"
                 android:layout_width="50dp"
@@ -89,8 +76,9 @@
                 android:focusedByDefault="true"
                 android:background="@drawable/border_primary"
                 android:tag="0"
+                android:textColor="@color/textColor"
                 android:gravity="center"
-                tools:ignore="UnusedAttribute" />
+                />
 
             <EditText
                 android:id="@+id/code2"
@@ -103,6 +91,7 @@
                 android:background="@drawable/border_primary"
                 android:tag="1"
                 android:inputType="number"
+                android:textColor="@color/textColor"
                 android:gravity="center"
                 />
 
@@ -117,6 +106,7 @@
                 android:background="@drawable/border_primary"
                 android:tag="2"
                 android:gravity="center"
+                android:textColor="@color/textColor"
                 android:inputType="number"
                 />
 
@@ -131,6 +121,7 @@
                 android:background="@drawable/border_primary"
                 android:tag="3"
                 android:inputType="number"
+                android:textColor="@color/textColor"
                 android:gravity="center"
                 />
 
@@ -145,6 +136,7 @@
                 android:background="@drawable/border_primary"
                 android:tag="4"
                 android:gravity="center"
+                android:textColor="@color/textColor"
                 android:inputType="number"
                 />
 
@@ -157,21 +149,14 @@
                 android:background="@drawable/border_primary"
                 android:tag="5"
                 android:fontFamily="@font/product_sans"
+                android:textColor="@color/textColor"
                 android:gravity="center"
                 android:inputType="number"
                 />
 
         </LinearLayout>
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/btnClearCode"
-            android:text="CLEAR"
-            android:fontFamily="@font/product_sans"
-            android:layout_marginRight="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
 
         <View
             android:layout_width="match_parent"

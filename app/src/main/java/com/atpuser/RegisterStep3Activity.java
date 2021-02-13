@@ -90,16 +90,17 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                             // Update the otp pin of user
                             String userPhone = SharedPref.getSharedPreferenceString(getApplicationContext(), "USER_PHONE_NUMBER", "");
                             User user = DB.getInstance(getApplicationContext()).userDao().findByPhone(userPhone);
+                            Toast.makeText(RegisterStep3Activity.this, user.getFirstname(), Toast.LENGTH_SHORT).show();
                             user.setOtp_code(code.getText().toString());
                             DB.getInstance(getApplicationContext()).userDao().update(user);
 
-                            // Clear the stage of the Registration.
+//                             Clear the stage of the Registration.
                             SharedPref.setSharedPreferenceInt(getApplicationContext(), "REGISTER_STAGE", 0);
 
-                            // Save the user as logged in.
+//                             Save the user as logged in.
                             SharedPref.setSharedPreferenceInt(getApplicationContext(), "USER_LOGGED_IN", user.getId());
 
-                            // Retrofit Request here..
+//                             Retrofit Request here..
 //                            sendToServer();
                             redirectToDashboard();
                         } else {
@@ -172,7 +173,7 @@ public class RegisterStep3Activity extends AppCompatActivity     {
 
     private void redirectToDashboard() {
         Intent dashboardActivity = new Intent(RegisterStep3Activity.this, DashboardActivity.class);
-        dashboardActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        dashboardActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         startActivity(dashboardActivity);
     }
 

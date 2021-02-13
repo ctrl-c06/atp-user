@@ -79,15 +79,15 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 }
                 // Check if number start with +639, 639 or 09
 
-//                User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
-//                if(user != null && user.getOtp_code().equals(password.getText().toString())) {
-//                    SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
-//                    SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
-//                    redirectToDashboard();
-//                } else {
-//                    phoneNumber.setError("Mobile Number / MPIN is invalid!");
-//                    password.setError("Mobile Number / MPIN is invalid!");
-//                }
+                User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
+                if(user != null && user.getOtp_code().equals(password.getText().toString())) {
+                    SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
+                    SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
+                    redirectToDashboard();
+                } else {
+                    phoneNumber.setError("Mobile Number / MPIN is invalid!");
+                    password.setError("Mobile Number / MPIN is invalid!");
+                }
             }
 
 
