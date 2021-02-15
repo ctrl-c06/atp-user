@@ -16,17 +16,13 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.atpuser.Helpers.SharedPref;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import de.adorsys.android.smsparser.SmsConfig;
@@ -40,7 +36,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private static String CODE = "";
     private static String PERSON_ID = "";
     private final static String BYPASS_CODE = "010697";
-    private final static String REQUEST_CODE = "88f9e51be6703354608f99efbcfedf20";
+    private final static String REQUEST_CODE = "<#>";
 
     LinearLayout codeLayout;
     EditText code1, code2, code3, code4, code5, code6;
@@ -95,7 +91,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
             barangayCode = SharedPref.getSharedPreferenceString(this, "USER_BARANGAY_CODE", "");
         }
 
-        this.requestAcceptanceOfCode();
+        this.requestOTPCode();
 
 
         code1 = findViewById(R.id.code1);
@@ -146,7 +142,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
 
 
-        resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
+        resentOtp.setOnClickListener(v -> this.requestOTPCode());
 
 
     }
@@ -187,14 +183,11 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
 
 
-    private String buildMessage(String barangayCode)
-    {
-        return REQUEST_CODE + MESSAGE_SEPERATOR + barangayCode;
-    }
 
-    private void requestAcceptanceOfCode() {
+    private void requestOTPCode() {
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
+
         SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, REQUEST_CODE, sentPI, deliveredPI);
     }
 
@@ -266,7 +259,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
         // Get the current valid code.
         if (messages.size() != 0 && messages.get(0) != null) {
-            long codeMinutePassed = minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis());
+            long codeSendTimeDifference = minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis());
 
             String code = messages.get(0).replaceAll("\\D+", "");
             // get the 6 digits MPIN
@@ -276,7 +269,8 @@ public class RegisterStep2Activity extends AppCompatActivity {
             CODE = MPIN;
             char[] c = MPIN.toCharArray();
 
-            if (c.length != 0 && codeMinutePassed <= 5) {
+
+            if (codeSendTimeDifference <= 5) {
                 code1.setText(String.valueOf(c[0]));
                 code2.setText(String.valueOf(c[1]));
                 code3.setText(String.valueOf(c[2]));

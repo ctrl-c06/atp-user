@@ -63,9 +63,7 @@ dependencies {
     // For developers using AndroidX in their applications
     implementation 'pub.devrel:easypermissions:3.0.0'
 
-    // For developers using the Android Support Library
-    implementation 'pub.devrel:easypermissions:2.0.1'
+    implementation 'de.adorsys.android:smsparser:0.0.3'
 
 
-    compile 'de.adorsys.android:smsparser:0.0.3'
 }
