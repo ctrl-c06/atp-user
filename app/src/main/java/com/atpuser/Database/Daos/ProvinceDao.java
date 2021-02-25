@@ -13,8 +13,8 @@ public interface ProvinceDao {
     @Insert
     void create(Province province);
 
-    @Query("SELECT name FROM provinces ORDER BY name")
-    List<String> all();
+    @Query("SELECT code, name FROM provinces ORDER BY name")
+    List<Province> all();
 
     @Query("SELECT code FROM provinces WHERE name = :name ")
     String getCodeByName(String name);

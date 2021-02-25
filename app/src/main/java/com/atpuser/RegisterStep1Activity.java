@@ -11,8 +11,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.view.Gravity;
 import android.view.View;
@@ -33,6 +35,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.atpuser.Database.DB;
+import com.atpuser.Database.Models.Municipal;
+import com.atpuser.Database.Models.Province;
 import com.atpuser.Database.Models.User;
 import com.atpuser.Fragments.DatePickerFragment;
 import com.atpuser.Helpers.SharedPref;
@@ -123,9 +127,16 @@ public class RegisterStep1Activity extends AppCompatActivity {
         AlertDialog.Builder provinceDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
         provinceDialog.setTitle("Select Province");
         provinceDialog.setCancelable(false);
+        
+        // Get all list of provinces.
+        List<Province> provinces = DB.getInstance(getApplicationContext()).provinceDao().all();
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(getApplicationContext()).provinceDao().all());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item);
 
+        // Load all provinces.
+        for(Province province :provinces) {
+            arrayAdapter.add(province.getName());
+        }
 
         provinceDialog.setNegativeButton("CANCEL", (dialog, which) -> dialog.dismiss());
 
@@ -133,13 +144,12 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
 
         provinceDialog.setAdapter(arrayAdapter, (dialog, which) -> {
-            String selectedProvince = arrayAdapter.getItem(which);
-            spinnerProvince.setText(selectedProvince);
+            Province province = provinces.get(which);
+            spinnerProvince.setText(province.getName());
             spinnerMunicipality.setText("");
-            DB.getInstance(getApplicationContext()).provinceDao().getCodeByName(selectedProvince);
 
 
-            initMunicipalityDialog(spinnerMunicipality, spinnerBarangay, selectedProvince);
+            initMunicipalityDialog(spinnerMunicipality, spinnerBarangay, province.getCode());
 
         });
 
@@ -179,7 +189,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
         List<String> options = new ArrayList<>();
         options.add("Take Photo");
-        options.add("Choose from Gallery");
+//            options.add("Choose from Gallery");
+
 
         final ArrayAdapter<String> cameraAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, options);
 
@@ -195,15 +206,27 @@ public class RegisterStep1Activity extends AppCompatActivity {
             } else {
                // Picking image
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+                    photoPickerIntent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }
+                photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                photoPickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 photoPickerIntent.setType("image/*");
-                photoPickerIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivityForResult(photoPickerIntent, PICK_IMAGE);
+                startActivityForResult(Intent.createChooser(photoPickerIntent, "CHOOSE PHOTO"), PICK_IMAGE);
             }
         });
 
 
-        Button btnCamera = findViewById(R.id.btnCamera);
-        btnCamera.setOnClickListener(v -> cameraDialog.show());
+        findViewById(R.id.btnCamera).setOnClickListener(v -> {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        });
+
+        // When user click the image then take a photo
+        user_image.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        });
 
 
 
@@ -271,11 +294,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         return;
                     }
 
-
                         User user = new User();
-
-
-
                         user.setLastname(lastname.getText().toString().toUpperCase());
                         user.setFirstname(firstname.getText().toString().toUpperCase());
                         user.setMiddlename(middlename.getText().toString().toUpperCase());
@@ -296,7 +315,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
                         user.setImage(userImageLink.toString());
                         long userId = DB.getInstance(this).userDao().create(user);
 
-                        this.redirectToStep2(phoneNumber.getText().toString(), spinnerBarangay.getText().toString(), userId);
+                        this.redirectToStep2(phoneNumber.getText().toString(),  userId);
                 });
 
                 confirmationDialog.show();
@@ -346,13 +365,10 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
     }
 
-    private void redirectToStep2(String phoneNumber, String barangay, long userId) {
-        String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(barangay);
+    private void redirectToStep2(String phoneNumber, long userId) {
         Intent step2Activity = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
         step2Activity.putExtra("PHONE_NUMBER", phoneNumber);
-        step2Activity.putExtra("BARANGAY_CODE", barangayCode);
         SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber);
-        SharedPref.setSharedPreferenceString(this,"USER_BARANGAY_CODE", barangayCode);
         SharedPref.setSharedPreferenceLong(this,"USER_ID", userId);
         startActivity(step2Activity);
     }
@@ -414,8 +430,13 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
 
     private void initMunicipalityDialog(EditText spinnerMunicipality, EditText spinnerBarangay, String selectedProvince) {
-        String province_code = DB.getInstance(this).provinceDao().getCodeByName(selectedProvince);
-        ArrayAdapter<String> municipalAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(getApplicationContext()).municipalDao().findByProvince(province_code));
+        List<Municipal> municipals =  DB.getInstance(getApplicationContext()).municipalDao().findByProvince(selectedProvince);
+        ArrayAdapter<String> municipalAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item);
+
+        // Load all municipals.
+        for(Municipal municipal : municipals) {
+            municipalAdapter.add(municipal.getName());
+        }
         municipalAdapter.notifyDataSetChanged();
 
         municipalDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
@@ -428,17 +449,16 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
 
         municipalDialog.setAdapter(municipalAdapter, (d, w) -> {
-            String selectedMunicipality = municipalAdapter.getItem(w);
-            spinnerMunicipality.setText(selectedMunicipality);
+            Municipal municipal = municipals.get(w);
+            spinnerMunicipality.setText(municipal.getName());
             spinnerBarangay.setText("");
 
-            this.initBarangayDialog(spinnerBarangay, selectedMunicipality);
+            this.initBarangayDialog(spinnerBarangay, municipal.getCode());
         });
     }
 
     private void initBarangayDialog(EditText spinnerBarangay, String selectedMunicipality) {
-        String municipality_code = DB.getInstance(this).municipalDao().getIdByName(selectedMunicipality);
-        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(this).barangayDao().getByMunicipal(municipality_code));
+        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(this).barangayDao().getByMunicipal(selectedMunicipality));
         barangayAdapter.notifyDataSetChanged();
 
         barangayDialog = new AlertDialog.Builder(RegisterStep1Activity.this);

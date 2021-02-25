@@ -86,12 +86,12 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                         code.setText("");
                         Toast.makeText(RegisterStep3Activity.this, "Confirmation of MPIN is required", Toast.LENGTH_LONG).show();
                     } else {
-                        if(firstPinInput.equals(code.getText().toString())) {
-                            // Update the otp pin of user
-                            String userPhone = SharedPref.getSharedPreferenceString(getApplicationContext(), "USER_PHONE_NUMBER", "");
-                            String personId = SharedPref.getSharedPreferenceString(getApplicationContext(), "PERSON_ID", "");
-                            if(!personId.isEmpty()) {
+                        String personId = SharedPref.getSharedPreferenceString(getApplicationContext(), "PERSON_ID", "");
 
+                        if(firstPinInput.equals(code.getText().toString()) && !personId.isEmpty()) {
+
+                                // Update the otp pin of user
+                                String userPhone = SharedPref.getSharedPreferenceString(getApplicationContext(), "USER_PHONE_NUMBER", "");
                                 User user = DB.getInstance(getApplicationContext()).userDao().findByPhone(userPhone);
                                 user.setOtp_code(code.getText().toString());
                                 user.setPerson_second_id(personId);
@@ -104,11 +104,10 @@ public class RegisterStep3Activity extends AppCompatActivity     {
                                 // Save the user as logged in.
                                 SharedPref.setSharedPreferenceInt(getApplicationContext(), "USER_LOGGED_IN", user.getId());
 
-                                redirectToDashboard();
-                            } else {
-                                Toast.makeText(RegisterStep3Activity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
-                            }
+                                // Reset the person id
+                                SharedPref.setSharedPreferenceString(getApplicationContext(), "PERSON_ID", "");
 
+                                redirectToDashboard();
                         } else {
                             code.setError("MPin not match!");
                             Toast.makeText(RegisterStep3Activity.this, "First and Confirmed MPIN not Match!", Toast.LENGTH_SHORT).show();

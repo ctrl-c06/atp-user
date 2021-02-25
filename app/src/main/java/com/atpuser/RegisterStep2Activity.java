@@ -9,10 +9,14 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +25,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.atpuser.Database.DB;
+import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
+import com.atpuser.Helpers.StringToASCII;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,15 +47,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private static String CODE = "";
     private static String PERSON_ID = "";
     private final static String BYPASS_CODE = "010697";
-    private final static String REQUEST_CODE = "88f9e51be6703354608f99efbcfedf20";
+    private final static String REQUEST_CODE = "<#>";
 
     LinearLayout codeLayout;
-    EditText code1, code2, code3, code4, code5, code6;
-    TextView resentOtp, userPhoneNumber;
+    TextView userPhoneNumber, timerForOtp;
+    EditText code;
+    Button resentOtp;
     public static final String GATEWAY_NUMBER = "09431364951";
-    String barangayCode = "";
 
-    String MESSAGE_SEPERATOR = "z";
+    String MESSAGE_SEPERATOR = "Z";
 
 
     Handler handler = new Handler();
@@ -76,79 +83,73 @@ public class RegisterStep2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_register_step2);
 
         initSMSReceiver();
-        fetcher();
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
 
 
         Bundle extra = getIntent().getExtras();
+        code = findViewById(R.id.code);
         resentOtp = findViewById(R.id.resendOTP);
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
+        timerForOtp = findViewById(R.id.timerForOtp);
+
+        timer();
 
         Intent intent = getIntent();
 
         if (intent.hasExtra("PHONE_NUMBER")) {
             userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
-            barangayCode = extra.getString("BARANGAY_CODE");
         } else {
             userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
-            barangayCode = SharedPref.getSharedPreferenceString(this, "USER_BARANGAY_CODE", "");
         }
 
         this.requestAcceptanceOfCode();
 
+        code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        code1 = findViewById(R.id.code1);
-        code2 = findViewById(R.id.code2);
-        code3 = findViewById(R.id.code3);
-        code4 = findViewById(R.id.code4);
-        code5 = findViewById(R.id.code5);
-        code6 = findViewById(R.id.code6);
-
-        // By default focus must be in the first index of the sequence.
-        findViewById(R.id.code1).requestFocus();
-        findViewById(R.id.code1).callOnClick();
-
-
-        codeLayout = findViewById(R.id.codeLayout);
-        int childCount = codeLayout.getChildCount();
-
-        for(int i = 0; i<childCount; i++) {
-            if(codeLayout.getChildAt(i) instanceof EditText) {
-                EditText e = (EditText) codeLayout.getChildAt(i);
-                e.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(e.getText().length() != 0) {
-                            // Last EditText.
-                            if(!e.getTag().equals("5")) {
-                                int nextEditEditTextIndex = Integer.parseInt(String.valueOf(e.getTag()));
-                                codeLayout.getChildAt(++nextEditEditTextIndex).requestFocus();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if(codeChecker(CODE) || codeChecker(BYPASS_CODE)) {
-                            gotoRegistrationStep3();
-                        }
-                    }
-                });
             }
-        }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty() && (codeChecker(CODE) || codeChecker(BYPASS_CODE) || codeChecker(SharedPref.getSharedPreferenceString(getApplicationContext(), "MPIN", "")))) {
+                    gotoRegistrationStep3();
+                } else {
+                    if(s.length() == 6) {
+                        Toast.makeText(RegisterStep2Activity.this, "MPIN Invalid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
 
         resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
 
+    }
 
+    private void timer() {
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                if(resentOtp.getVisibility() != View.GONE) {
+                    resentOtp.setVisibility(View.GONE);
+                }
+                timerForOtp.setText("Request another OTP Code : " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                timerForOtp.setText("");
+                if(resentOtp.getVisibility() == View.GONE) {
+                    resentOtp.setVisibility(View.VISIBLE);
+                }
+            }
+        }.start();
     }
 
     private void initSMSReceiver() {
@@ -187,15 +188,25 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
 
 
-    private String buildMessage(String barangayCode)
+    private String buildMessage()
     {
-        return REQUEST_CODE + MESSAGE_SEPERATOR + barangayCode;
+        long userId = SharedPref.getSharedPreferenceLong(this, "USER_ID", 0);
+        User user = DB.getInstance(this).userDao().find(userId);
+
+        return  REQUEST_CODE
+                + StringToASCII.convert(user.getFirstname().toUpperCase()) + StringToASCII.convert("|")
+                + StringToASCII.convert(user.getMiddlename().toUpperCase()) + StringToASCII.convert("|")
+                + StringToASCII.convert(user.getLastname().toUpperCase()) + StringToASCII.convert("|")
+                + StringToASCII.convert((user.getSuffix().isEmpty()) ? "*" : user.getSuffix().toUpperCase())  + StringToASCII.convert("|")
+                + StringToASCII.convert(user.getDate_of_birth());
+
     }
 
     private void requestAcceptanceOfCode() {
+        timer();
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
-        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, REQUEST_CODE, sentPI, deliveredPI);
+        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, buildMessage(), sentPI, deliveredPI);
     }
 
 
@@ -206,35 +217,13 @@ public class RegisterStep2Activity extends AppCompatActivity {
         startActivity(register3Activity);
     }
 
-    private String replaceOtherParts(String phone) {
-        char[] chars = phone.toCharArray();
-        int no_of_replace = 6;
-        for(int i = chars.length - 1; i>(chars.length - no_of_replace); i--) {
-            chars[i] = '*';
-        }
-        return String.valueOf(chars);
-    }
 
     private boolean codeChecker(String SEND_CODE)
     {
-        int valueCount = 0;
-
-        for(int i = 0; i<codeLayout.getChildCount(); i++) {
-            if (codeLayout.getChildAt(i) instanceof EditText) {
-                EditText e = (EditText) codeLayout.getChildAt(i);
-                if(!e.getText().toString().isEmpty()) {
-                    valueCount++;
-                }
-            }
-        }
-
-        if(codeLayout.getChildCount() == valueCount) {
-            String inputCode = code1.getText().toString() + code2.getText().toString() + code3.getText().toString() + code4.getText().toString() + code5.getText().toString() + code6.getText().toString();
-            return SEND_CODE.equals(inputCode);
-        }
-
-        return false;
+        String inputCode = code.getText().toString();
+        return SEND_CODE.equals(inputCode);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -268,21 +257,18 @@ public class RegisterStep2Activity extends AppCompatActivity {
         if (messages.size() != 0 && messages.get(0) != null) {
             long codeMinutePassed = minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis());
 
-            String code = messages.get(0).replaceAll("\\D+", "");
+            String stringCode = messages.get(0).replaceAll("\\D+", "");
+
             // get the 6 digits MPIN
-            String MPIN = code.substring(0, 6);
-            PERSON_ID = code.substring(6);
+            String MPIN = stringCode.substring(0, 6);
+            SharedPref.setSharedPreferenceString(this, "MPIN", MPIN);
+            PERSON_ID = stringCode.substring(6);
 
             CODE = MPIN;
             char[] c = MPIN.toCharArray();
 
             if (c.length != 0 && codeMinutePassed <= 5) {
-                code1.setText(String.valueOf(c[0]));
-                code2.setText(String.valueOf(c[1]));
-                code3.setText(String.valueOf(c[2]));
-                code4.setText(String.valueOf(c[3]));
-                code5.setText(String.valueOf(c[4]));
-                code6.setText(String.valueOf(c[5]));
+                code.setText(MPIN);
             }
 
         }

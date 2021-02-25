@@ -33,7 +33,7 @@
 
     </string>
     <string name="message_helper">For registration verification make sure you have enough LOAD Balance and strong signal.</string>
-    <string name="photo_string">take / attach</string>
+    <string name="photo_string">TAKE A PHOTO</string>
     <string name="enter_your_mpin">Enter your MPIN</string>
     <string name="mpin_label">ENTER YOUR MPIN</string>
     <string name="duplicate_phone_number">Phone Number already exists</string>

@@ -2,6 +2,7 @@ package com.atpuser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.atpuser.Database.DB;
 import com.atpuser.Database.Models.Barangay;
 import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
+import com.bumptech.glide.Glide;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -58,6 +60,14 @@ public class ProfileActivity extends AppCompatActivity {
         province.setText(user.getProvince());
         municipality.setText(user.getMunicipality());
         barangay.setText(user.getBarangay());
+
+
+        Uri imageUri = Uri.parse(user.getImage());
+
+        Glide.with(this)
+                .load(imageUri) // Uri of the picture
+                .placeholder(R.drawable.user_image)
+                .into(user_image);
 
 
 

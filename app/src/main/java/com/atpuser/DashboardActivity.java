@@ -1,6 +1,7 @@
 package com.atpuser;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
 import com.atpuser.Helpers.StringToASCII;
 import com.atpuser.Service.RetrofitService;
+import com.bumptech.glide.Glide;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -58,6 +60,7 @@ import smartdevelop.ir.eram.showcaseviewlib.GuideView;
 public class DashboardActivity extends AppCompatActivity {
 
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1001;
     private long mBackPressed;
 
     public final static int READ_EXTERNAL_CODE = 1001;
@@ -83,6 +86,13 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+            try {
+                requestPermissionForReadExtertalStorage();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
 
         // Setting the user account
         setUserAccount();
@@ -109,16 +119,22 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-        final Uri imageUri = Uri.parse(user.getImage());
-        final InputStream imageStream;
-        try {
+        Uri imageUri = Uri.parse(user.getImage());
 
-            imageStream = getContentResolver().openInputStream(imageUri);
-            final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
-            userImage.setImageBitmap(userProfile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Glide.with(this)
+                .load(imageUri)
+                .placeholder(R.drawable.user_image)
+                .into(userImage);
+
+//        final InputStream imageStream;
+//        try {
+//
+//            imageStream = getContentResolver().openInputStream(imageUri);
+//            final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
+//            userImage.setImageBitmap(userProfile);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         if(SharedPref.getSharedPreferenceBoolean(this,"FIRST_VISIT", true)) {
             this.notificationDialog();
@@ -135,6 +151,8 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         try {
+            String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(user.getBarangay());
+
             String STR_QR = user.getLastname() + "|" + user.getFirstname()
                                                + "|" + user.getMiddlename()
                                                + "|" + user.getSuffix()
@@ -150,7 +168,7 @@ public class DashboardActivity extends AppCompatActivity {
                                                + "|" + user.getDate_of_birth()
                                                + "|" + user.getLandline_number()
                                                + "|" + user.getGender()
-                                               + "|" + user.getPerson_second_id()
+                                               + "|" + barangayCode + "-" + user.getPerson_second_id()
                                                + "|" + "MOBILE" ;
 
             Bitmap bitmap = encodeAsBitmap(StringToASCII.convert(STR_QR));
@@ -180,6 +198,24 @@ public class DashboardActivity extends AppCompatActivity {
             userOptionDialog.show();
         });
 
+    }
+
+    public boolean checkPermissionForReadExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadExtertalStorage() throws Exception {
+        try {
+            ActivityCompat.requestPermissions((Activity) this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 

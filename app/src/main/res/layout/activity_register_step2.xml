@@ -59,115 +59,55 @@
 
         <LinearLayout
             android:id="@+id/codeLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <EditText
-                android:id="@+id/code1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:maxLength="1"
                 android:inputType="number"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/product_sans"
-                android:focusedByDefault="true"
-                android:background="@drawable/border_primary"
-                android:tag="0"
-                android:textColor="@color/textColor"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/code2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:maxLength="1"
+                android:maxLength="6"
+                android:padding="15dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/product_sans"
                 android:background="@drawable/border_primary"
-                android:tag="1"
-                android:inputType="number"
                 android:textColor="@color/textColor"
+                android:textSize="16sp"
                 android:gravity="center"
+
                 />
 
-            <EditText
-                android:id="@+id/code3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:maxLength="1"
-                android:layout_marginEnd="5dp"
+            <TextView
+                android:id="@+id/timerForOtp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#303030"
+                android:text=""
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp"
                 android:fontFamily="@font/product_sans"
-                android:background="@drawable/border_primary"
-                android:tag="2"
-                android:gravity="center"
-                android:textColor="@color/textColor"
-                android:inputType="number"
-                />
-
-            <EditText
-                android:id="@+id/code4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:maxLength="1"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/product_sans"
-                android:background="@drawable/border_primary"
-                android:tag="3"
-                android:inputType="number"
-                android:textColor="@color/textColor"
-                android:gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/code5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:maxLength="1"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/product_sans"
-                android:background="@drawable/border_primary"
-                android:tag="4"
-                android:gravity="center"
-                android:textColor="@color/textColor"
-                android:inputType="number"
-                />
-
-            <EditText
-                android:id="@+id/code6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:maxLength="1"
-                android:background="@drawable/border_primary"
-                android:tag="5"
-                android:fontFamily="@font/product_sans"
-                android:textColor="@color/textColor"
-                android:gravity="center"
-                android:inputType="number"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:background="#F2F3F4" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginTop="7dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:background="#F2F3F4" />-->
 
 
         <LinearLayout
@@ -176,26 +116,14 @@
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:textColor="#303030"
-                android:text="Didn't receive the OTP? "
-                android:layout_marginBottom="10dp"
-                android:textSize="15sp"
-                android:fontFamily="@font/product_sans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
+            <Button
                 android:id="@+id/resendOTP"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/product_sans"
-                android:gravity="center_horizontal"
                 android:text="Resend OTP"
-                android:textColor="@color/design_default_color_primary"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
