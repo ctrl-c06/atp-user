@@ -28,10 +28,11 @@ public abstract class DB extends RoomDatabase {
     public abstract BarangayDao barangayDao();
 
 
-    public synchronized  static DB getInstance(Context context){
+    public synchronized  static DB getInstance(Context context)
+    {
         if(appDatabase == null){
-            appDatabase = Room.databaseBuilder(context.getApplicationContext(), DB.class, "atb_2")
-                    .createFromAsset("atb_2.db")
+            appDatabase = Room.databaseBuilder(context.getApplicationContext(), DB.class, "atb_2_1")
+                    .createFromAsset("atb_2_1.db")
                     .allowMainThreadQueries()
                     .build();
         }

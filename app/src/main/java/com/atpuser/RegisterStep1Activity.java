@@ -414,20 +414,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    public String getRealPathFromURI(Uri uri) {
-        String path = "";
-        if (getContentResolver() != null) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                path = cursor.getString(idx);
-                cursor.close();
-            }
-        }
-        return path;
-    }
-
 
     private void initMunicipalityDialog(EditText spinnerMunicipality, EditText spinnerBarangay, String selectedProvince) {
         List<Municipal> municipals =  DB.getInstance(getApplicationContext()).municipalDao().findByProvince(selectedProvince);

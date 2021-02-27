@@ -204,9 +204,9 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     private void requestAcceptanceOfCode() {
         timer();
-        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
-        SmsManager.getDefault().sendTextMessage(GATEWAY_NUMBER, null, buildMessage(), sentPI, deliveredPI);
+        SmsManager sms = SmsManager.getDefault();
+        ArrayList<String> parts = sms.divideMessage(buildMessage());
+        sms.sendMultipartTextMessage(GATEWAY_NUMBER, null, parts, null, null);
     }
 
 
