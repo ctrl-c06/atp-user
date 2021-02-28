@@ -151,8 +151,6 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         try {
-            String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(user.getBarangay());
-
             String STR_QR = user.getLastname() + "|" + user.getFirstname()
                                                + "|" + user.getMiddlename()
                                                + "|" + user.getSuffix()
@@ -168,7 +166,7 @@ public class DashboardActivity extends AppCompatActivity {
                                                + "|" + user.getDate_of_birth()
                                                + "|" + user.getLandline_number()
                                                + "|" + user.getGender()
-                                               + "|" + barangayCode + "-" + user.getPerson_second_id()
+                                               + "|" + user.getPerson_second_id()
                                                + "|" + "MOBILE" ;
 
             Bitmap bitmap = encodeAsBitmap(StringToASCII.convert(STR_QR));

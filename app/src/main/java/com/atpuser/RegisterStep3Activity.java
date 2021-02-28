@@ -121,60 +121,7 @@ public class RegisterStep3Activity extends AppCompatActivity     {
 
     }
 
-    private void sendToServer() {
-        progressdialog = new ProgressDialog(RegisterStep3Activity.this);
-        progressdialog.setMessage("Processing please wait...");
-        progressdialog.setCancelable(false);
-        progressdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressdialog.show();
 
-        Retrofit retrofit = RetrofitService.RetrofitInstance(getApplicationContext());
-        IUser service = retrofit.create(IUser.class);
-
-        // Get user details.
-        String userId = String.valueOf(SharedPref.getSharedPreferenceLong(this, "USER_ID", 0));
-        User user = DB.getInstance(this).userDao().find(Integer.parseInt(userId));
-        if(user != null) {
-            UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
-            userRegisterRequest.setFirstname(user.getFirstname());
-            userRegisterRequest.setMiddlename(user.getMiddlename());
-            userRegisterRequest.setLastname(user.getLastname());
-            userRegisterRequest.setSuffix(user.getSuffix());
-            userRegisterRequest.setDate_of_birth(user.getDate_of_birth());
-            userRegisterRequest.setGender(user.getGender());
-            userRegisterRequest.setBarangay(user.getBarangay());
-            userRegisterRequest.setCivil_status(user.getCivil_status());
-            userRegisterRequest.setPhone_number(user.getPhone_number());
-            userRegisterRequest.setLandline_number(user.getLandline_number());
-            userRegisterRequest.setEmail(user.getEmail());
-            userRegisterRequest.setRegistered_from("MOBILE");
-
-
-
-            Call<UserRegisterResponse> userRegisterResponseCall = service.register(userRegisterRequest);
-            userRegisterResponseCall.enqueue(new Callback<UserRegisterResponse>() {
-                @Override
-                public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
-                    // Redirect to dashboard.
-                    progressdialog.dismiss();
-                    user.setPerson_second_id(response.body().getPerson_id());
-                    // Update the user person id.
-                    DB.getInstance(getApplicationContext()).userDao().update(user);
-                    redirectToDashboard();
-                }
-
-                @Override
-                public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
-                    progressdialog.dismiss();
-                    Toast.makeText(RegisterStep3Activity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            progressdialog.dismiss();
-            Toast.makeText(this, "Oops something went wrong.", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
     private void redirectToDashboard() {
         Intent dashboardActivity = new Intent(RegisterStep3Activity.this, DashboardActivity.class);

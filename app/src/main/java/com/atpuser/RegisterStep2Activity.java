@@ -1,11 +1,7 @@
 package com.atpuser;
 
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +10,7 @@ import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,14 +26,9 @@ import com.atpuser.Database.Models.User;
 import com.atpuser.Helpers.SharedPref;
 import com.atpuser.Helpers.StringToASCII;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
-
-import de.adorsys.android.smsparser.SmsConfig;
-import de.adorsys.android.smsparser.SmsReceiver;
 
 public class RegisterStep2Activity extends AppCompatActivity {
 
@@ -53,7 +44,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     TextView userPhoneNumber, timerForOtp;
     EditText code;
     Button resentOtp;
-    public static final String GATEWAY_NUMBER = "09431364951";
+    public static final String GATEWAY_NUMBER = "+639630711082";
 
     String MESSAGE_SEPERATOR = "Z";
 
@@ -62,18 +53,17 @@ public class RegisterStep2Activity extends AppCompatActivity {
     Runnable runnable;
     int delay = 5000;
 
+    CountDownTimer timer;
 
     @Override
     protected void onPause() {
         handler.removeCallbacks(runnable);
-        unRegisterReceiver();
-
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        registerReceiver();
+
         super.onResume();
     }
 
@@ -82,7 +72,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
 
-        initSMSReceiver();
 
         SharedPref.setSharedPreferenceInt(this, "REGISTER_STAGE", 2);
 
@@ -93,48 +82,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
         timerForOtp = findViewById(R.id.timerForOtp);
 
-        timer();
-
-        Intent intent = getIntent();
-
-        if (intent.hasExtra("PHONE_NUMBER")) {
-            userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
-        } else {
-            userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
-        }
-
-        this.requestAcceptanceOfCode();
-
-        code.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty() && (codeChecker(CODE) || codeChecker(BYPASS_CODE) || codeChecker(SharedPref.getSharedPreferenceString(getApplicationContext(), "MPIN", "")))) {
-                    gotoRegistrationStep3();
-                } else {
-                    if(s.length() == 6) {
-                        Toast.makeText(RegisterStep2Activity.this, "MPIN Invalid", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-
-        resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
-
-    }
-
-    private void timer() {
-        new CountDownTimer(60000, 1000) {
+        timer = new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 if(resentOtp.getVisibility() != View.GONE) {
@@ -149,35 +97,53 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     resentOtp.setVisibility(View.VISIBLE);
                 }
             }
-        }.start();
-    }
+        };
 
-    private void initSMSReceiver() {
-        SmsConfig.INSTANCE.initializeSmsConfig(
-                "",
-                "", "09431364951", "+639431364951");
-    }
+        Intent intent = getIntent();
 
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(SmsReceiver.INTENT_ACTION_SMS)) {
-                fetchSMS();
-            }
+        if (intent.hasExtra("PHONE_NUMBER")) {
+            userPhoneNumber.setText(extra.getString("PHONE_NUMBER"));
+        } else {
+            userPhoneNumber.setText(SharedPref.getSharedPreferenceString(this, "USER_PHONE_NUMBER", ""));
         }
-    };
 
 
-    private void registerReceiver() {
-        localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(SmsReceiver.INTENT_ACTION_SMS);
-        localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+        this.requestAcceptanceOfCode();
+
+        findViewById(R.id.btnProceed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(code.getText().length() != 6) {
+                    Toast toast = Toast.makeText(RegisterStep2Activity.this,"OTP Code must be 6 characters", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    return;
+                }
+
+                if(codeChecker(CODE) || codeChecker(SharedPref.getSharedPreferenceString(getApplicationContext(), "MPIN", ""))) {
+                    gotoRegistrationStep3();
+                } else {
+                    Toast toast = Toast.makeText(RegisterStep2Activity.this,"Invalid OTP Code", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }
+        });
+
+
+
+
+        resentOtp.setOnClickListener(v -> this.requestAcceptanceOfCode());
+
+        fetcher();
+
     }
 
-    private void unRegisterReceiver() {
-        localBroadcastManager.unregisterReceiver(broadcastReceiver);
-    }
+
+
+
+
+
 
     private void fetcher() {
         handler.postDelayed(runnable = () -> {
@@ -192,18 +158,21 @@ public class RegisterStep2Activity extends AppCompatActivity {
     {
         long userId = SharedPref.getSharedPreferenceLong(this, "USER_ID", 0);
         User user = DB.getInstance(this).userDao().find(userId);
+        String barangayCode = SharedPref.getSharedPreferenceString(this, "BARANGAY_CODE", "");
 
-        return  REQUEST_CODE
+        return REQUEST_CODE +
+                barangayCode + MESSAGE_SEPERATOR
                 + StringToASCII.convert(user.getFirstname().toUpperCase()) + StringToASCII.convert("|")
                 + StringToASCII.convert(user.getMiddlename().toUpperCase()) + StringToASCII.convert("|")
                 + StringToASCII.convert(user.getLastname().toUpperCase()) + StringToASCII.convert("|")
                 + StringToASCII.convert((user.getSuffix().isEmpty()) ? "*" : user.getSuffix().toUpperCase())  + StringToASCII.convert("|")
                 + StringToASCII.convert(user.getDate_of_birth());
 
+
     }
 
     private void requestAcceptanceOfCode() {
-        timer();
+        timer.start();
         SmsManager sms = SmsManager.getDefault();
         ArrayList<String> parts = sms.divideMessage(buildMessage());
         sms.sendMultipartTextMessage(GATEWAY_NUMBER, null, parts, null, null);
@@ -239,7 +208,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
         ContentResolver contentResolver = getContentResolver();
 
-        String phoneNumber = "+639431364951";
+        String phoneNumber = GATEWAY_NUMBER;
         String sms = "address='"+ phoneNumber + "'";
         Cursor cursor = contentResolver.query(uri, new String[] { "_id", "date", "body", "type"}, sms, null,   null);
 
@@ -254,10 +223,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
         }
 
         // Get the current valid code.
-        if (messages.size() != 0 && messages.get(0) != null) {
+        if (messages.size() != 0 && messages.get(0) != null && messages.get(0).contains("Your One-Time-Pin")) {
+
+            findViewById(R.id.verificationLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.validationLayout).setVisibility(View.GONE);
+
             long codeMinutePassed = minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis());
 
             String stringCode = messages.get(0).replaceAll("\\D+", "");
+
 
             // get the 6 digits MPIN
             String MPIN = stringCode.substring(0, 6);
@@ -270,6 +244,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
             if (c.length != 0 && codeMinutePassed <= 5) {
                 code.setText(MPIN);
             }
+        } else if(messages.size() != 0
+                && messages.get(0) != null
+                && messages.get(0).contains("Sorry")
+                && minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis()) <= 5) {
+
+                timerForOtp.setVisibility(View.GONE);
+                TextView waitingMessage = findViewById(R.id.waitingMessage);
+                waitingMessage.setText("Sorry but the information that you give is already exists.");
+                timer.cancel();
 
         }
     }

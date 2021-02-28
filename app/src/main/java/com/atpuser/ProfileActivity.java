@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         EditText barangay = findViewById(R.id.barangay);
 
         EditText civil_status = findViewById(R.id.civil_status);
-        personID.setText(String.format("%s-%s", barangayCode, user.getPerson_second_id()));
+        personID.setText(String.format("%s", user.getPerson_second_id()));
         lastname.setText(user.getLastname());
         firstname.setText(user.getFirstname());
         middlename.setText(user.getMiddlename());
@@ -68,9 +68,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .load(imageUri) // Uri of the picture
                 .placeholder(R.drawable.user_image)
                 .into(user_image);
-
-
-
 
     }
 }

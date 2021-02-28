@@ -8,7 +8,10 @@
     android:id="@+id/layout"
     tools:context=".RegisterStep2Activity">
 
+
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/verificationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -117,8 +120,16 @@
             android:layout_gravity="center_horizontal">
 
             <Button
+                android:id="@+id/btnProceed"
+                android:text="PROCEED"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
                 android:id="@+id/resendOTP"
                 android:visibility="gone"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/product_sans"
@@ -138,6 +149,38 @@
     </LinearLayout>
 
 
+
+    <LinearLayout
+        android:id="@+id/validationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/capitol_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            />
+
+
+        <TextView
+
+            android:id="@+id/waitingMessage"
+            android:text="Please wait while ATP doing some confirmations."
+            android:fontFamily="@font/product_sans"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/textColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 
 

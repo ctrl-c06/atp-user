@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.atpuser.Database.DB;
+import com.atpuser.Database.Models.Barangay;
 import com.atpuser.Database.Models.Municipal;
 import com.atpuser.Database.Models.Province;
 import com.atpuser.Database.Models.User;
@@ -68,6 +69,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
     Bitmap selectedImage;
 
 
+    EditText barangayCode;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
         EditText spinnerProvince = findViewById(R.id.province);
         EditText spinnerMunicipality = findViewById(R.id.municipality);
         EditText spinnerBarangay = findViewById(R.id.barangay);
+        barangayCode = findViewById(R.id.barangayCode);
 
         user_image = findViewById(R.id.user_image);
 
@@ -368,8 +372,11 @@ public class RegisterStep1Activity extends AppCompatActivity {
     private void redirectToStep2(String phoneNumber, long userId) {
         Intent step2Activity = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
         step2Activity.putExtra("PHONE_NUMBER", phoneNumber);
+        step2Activity.putExtra("BARANGAY_CODE", barangayCode.getText().toString());
+
         SharedPref.setSharedPreferenceString(this,"USER_PHONE_NUMBER", phoneNumber);
         SharedPref.setSharedPreferenceLong(this,"USER_ID", userId);
+        SharedPref.setSharedPreferenceString(this,"BARANGAY_CODE", barangayCode.getText().toString());
         startActivity(step2Activity);
     }
 
@@ -444,7 +451,12 @@ public class RegisterStep1Activity extends AppCompatActivity {
     }
 
     private void initBarangayDialog(EditText spinnerBarangay, String selectedMunicipality) {
-        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item, DB.getInstance(this).barangayDao().getByMunicipal(selectedMunicipality));
+        List<Barangay> barangayList = DB.getInstance(this).barangayDao().getByMunicipal(selectedMunicipality);
+
+        ArrayAdapter<String> barangayAdapter = new ArrayAdapter<>(RegisterStep1Activity.this, android.R.layout.simple_spinner_dropdown_item);
+        for(Barangay b: barangayList) {
+            barangayAdapter.add(b.getName());
+        }
         barangayAdapter.notifyDataSetChanged();
 
         barangayDialog = new AlertDialog.Builder(RegisterStep1Activity.this);
@@ -453,9 +465,11 @@ public class RegisterStep1Activity extends AppCompatActivity {
 
         barangayDialog.setNegativeButton("CANCEL", (barangayDialog, barangayWhich) -> barangayDialog.dismiss());
 
-        barangayDialog.setAdapter(barangayAdapter, (barangayD, barangayW) -> {
-            String selectedBarangay = barangayAdapter.getItem(barangayW);
-            spinnerBarangay.setText(selectedBarangay);
+        barangayDialog.setAdapter(barangayAdapter, (barangayD, barangayIndex) -> {
+            Barangay barangay = barangayList.get(barangayIndex);
+            spinnerBarangay.setText(barangay.getName());
+            Toast.makeText(this, barangay.getCode(), Toast.LENGTH_SHORT).show();
+            barangayCode.setText(barangay.getCode());
         });
     }
 
