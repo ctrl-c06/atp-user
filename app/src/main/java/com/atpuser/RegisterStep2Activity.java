@@ -223,7 +223,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
         }
 
         // Get the current valid code.
-        if (messages.size() != 0 && messages.get(0) != null && messages.get(0).contains("Your One-Time-Pin")) {
+        if (messages.size() != 0
+                && messages.get(0) != null
+                && messages.get(0).contains("Your One-Time-Pin")
+                && minutesBetween(Long.parseLong(messagesTime.get(0)), System.currentTimeMillis()) <= 5) {
 
             findViewById(R.id.verificationLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.validationLayout).setVisibility(View.GONE);

@@ -148,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
 
-
+        String buildAddress = user.getPurok() + " " + user.getStreet() + " " + user.getBarangay() + " " + user.getMunicipality() + " " + user.getProvince();
 
         try {
             String STR_QR = user.getLastname() + "|" + user.getFirstname()
@@ -158,11 +158,7 @@ public class DashboardActivity extends AppCompatActivity {
                                                + "|" + user.getCivil_status()
                                                + "|" + user.getPhone_number()
                                                + "|" + user.getEmail()
-                                               + "|" + user.getProvince()
-                                               + "|" + user.getMunicipality()
-                                               + "|" + user.getBarangay()
-                                               + "|" + user.getPurok()
-                                               + "|" + user.getStreet()
+                                               + "|" + buildAddress
                                                + "|" + user.getDate_of_birth()
                                                + "|" + user.getLandline_number()
                                                + "|" + user.getGender()
