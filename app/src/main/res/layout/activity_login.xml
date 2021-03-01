@@ -83,8 +83,9 @@
 
 
 
+<!--       android:text="@string/mobile_label"-->
        <TextView
-           android:text="@string/mobile_label"
+           android:text="Username or Mobile Number"
            android:fontFamily="@font/product_sans"
            android:textSize="15sp"
            android:textColor="#303030"
@@ -95,15 +96,13 @@
 
 
        <EditText
-           android:id="@+id/phoneNumber"
+           android:id="@+id/phoneOrUsername"
            android:padding="15dp"
            android:singleLine="true"
            android:layout_marginBottom="12dp"
            android:fontFamily="@font/product_sans"
-           android:hint="+639196393499"
            android:textColor="@color/textColor"
            android:textColorHint="@color/textHintColor"
-           android:inputType="phone"
            android:background="@drawable/textbox"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>
@@ -127,16 +126,21 @@
            android:fontFamily="@font/product_sans"
            android:background="@drawable/textbox"
            android:textColor="@color/textColor"
-           android:hint="@string/password_hint"
            android:textColorHint="@color/textHintColor"
            android:inputType="textPassword"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
+           />
+
+       <CheckBox
+           android:id="@+id/loggedInWithWebAccount"
+           android:text="I want to use my web account"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
            android:layout_marginBottom="5dp"
            />
 
-
-           <Button
+       <Button
                android:id="@+id/btnLogin"
                android:text="@string/login"
                android:textColor="#FFFFFF"
@@ -165,6 +169,7 @@
                android:layout_marginEnd="15dp"
                android:layout_marginStart="15dp"
                android:background="#F2F3F4" />
+
 
 
        <Button

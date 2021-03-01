@@ -468,7 +468,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
         barangayDialog.setAdapter(barangayAdapter, (barangayD, barangayIndex) -> {
             Barangay barangay = barangayList.get(barangayIndex);
             spinnerBarangay.setText(barangay.getName());
-            Toast.makeText(this, barangay.getCode(), Toast.LENGTH_SHORT).show();
             barangayCode.setText(barangay.getCode());
         });
     }

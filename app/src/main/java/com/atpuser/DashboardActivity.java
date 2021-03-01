@@ -113,18 +113,20 @@ public class DashboardActivity extends AppCompatActivity {
             userName.setText(String.format("%s %s", user.getFirstname().toUpperCase(), user.getLastname().toUpperCase()));
         }
 
+        if(user.getImage() != null) {
+            Uri imageUri = Uri.parse(user.getImage());
+            Glide.with(this)
+                    .load(imageUri)
+                    .placeholder(R.drawable.user_image)
+                    .into(userImage);
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.user_image)
+                    .into(userImage);
+        }
 
 
 
-
-
-
-        Uri imageUri = Uri.parse(user.getImage());
-
-        Glide.with(this)
-                .load(imageUri)
-                .placeholder(R.drawable.user_image)
-                .into(userImage);
 
 //        final InputStream imageStream;
 //        try {

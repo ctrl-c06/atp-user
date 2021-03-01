@@ -20,10 +20,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        int userId = Integer.parseInt(String.valueOf(SharedPref.getSharedPreferenceLong(this, "USER_ID", 0)));
+        int userId = Integer.parseInt(String.valueOf(SharedPref.getSharedPreferenceInt(this, "USER_LOGGED_IN", 0)));
         User user = DB.getInstance(this).userDao().find(userId);
-        String barangayCode = DB.getInstance(this).barangayDao().getCodeByName(user.getBarangay());
-
 
 
         ImageView user_image = findViewById(R.id.user_image);
@@ -62,12 +60,17 @@ public class ProfileActivity extends AppCompatActivity {
         barangay.setText(user.getBarangay());
 
 
-        Uri imageUri = Uri.parse(user.getImage());
-
-        Glide.with(this)
-                .load(imageUri) // Uri of the picture
-                .placeholder(R.drawable.user_image)
-                .into(user_image);
+        if(user.getImage() != null) {
+            Uri imageUri = Uri.parse(user.getImage());
+            Glide.with(this)
+                    .load(imageUri)
+                    .placeholder(R.drawable.user_image)
+                    .into(user_image);
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.user_image)
+                    .into(user_image);
+        }
 
     }
 }
