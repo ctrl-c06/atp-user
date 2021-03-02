@@ -87,9 +87,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
 
 
         btnLogin.setOnClickListener(v -> {
-            phoneNumberOrUsername.setText("tooshort01");
-            userMPIN.setText("1234");
-
             AwesomeValidation mAwesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
             mAwesomeValidation.addValidation(this, R.id.phoneOrUsername, input -> !phoneNumberOrUsername.getText().toString().isEmpty(), R.string.login_validation_error);
             mAwesomeValidation.addValidation(this, R.id.password, "[0-9]+", R.string.login_validation_error);
@@ -183,6 +180,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     private void setDataForLocallyStorage(UserLogin userInformationLoginResponse) {
         User user = new User();
 
+        user.setUsername(userInformationLoginResponse.getUsername());
         user.setLastname(userInformationLoginResponse.getLastname());
         user.setFirstname(userInformationLoginResponse.getFirstname());
         user.setMiddlename(userInformationLoginResponse.getMiddlename());
@@ -211,16 +209,41 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         redirectToDashboard();
     }
 
-    private void loginAccountLocally(EditText phoneNumber, EditText password) {
-        User user = DB.getInstance(this).userDao().findByPhone(phoneNumber.getText().toString());
+    private void loginAccountLocally(EditText phoneNumberOrUsername, EditText password) {
+        User user;
+        boolean userUsePhoneNumber = false;
+
+        char[] arrayPhoneNumber = phoneNumberOrUsername.getText().toString().toCharArray();
+
+        // Check first if the user want to use it's username or phone number.
+        if(String.valueOf(arrayPhoneNumber[0]).equals("+") && String.valueOf(arrayPhoneNumber[1]).equals("6")
+                && String.valueOf(arrayPhoneNumber[2]).equals("3")
+                && String.valueOf(arrayPhoneNumber[3]).equals("9")) {
+            userUsePhoneNumber = true;
+
+        } else if(String.valueOf(arrayPhoneNumber[0]).equals("0") && String.valueOf(arrayPhoneNumber[1]).equals("9")) {
+            userUsePhoneNumber = true;
+        }
+
+        if(userUsePhoneNumber) {
+            // Use Phone Number
+            user = DB.getInstance(this).userDao().findByPhone(phoneNumberOrUsername.getText().toString());
+        } else {
+            // Use Username
+            user =  DB.getInstance(this).userDao().findByUsername(phoneNumberOrUsername.getText().toString());
+        }
+
+
         if(user != null && user.getOtp_code().equals(password.getText().toString())) {
             SharedPref.setSharedPreferenceBoolean(this, "IS_USER_HAS_ACCOUNT", true);
             SharedPref.setSharedPreferenceInt(this, "USER_LOGGED_IN", user.getId());
             redirectToDashboard();
         } else {
-            phoneNumber.setError("Mobile Number / MPIN is invalid!");
+            phoneNumberOrUsername.setError("Mobile Number / MPIN is invalid!");
             password.setError("Mobile Number / MPIN is invalid!");
         }
+
+
     }
 
     private void redirectToDashboard() {

@@ -83,9 +83,8 @@
 
 
 
-<!--       android:text="@string/mobile_label"-->
        <TextView
-           android:text="Username or Mobile Number"
+           android:text="@string/mobile_label"
            android:fontFamily="@font/product_sans"
            android:textSize="15sp"
            android:textColor="#303030"

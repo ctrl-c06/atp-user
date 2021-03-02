@@ -82,6 +82,10 @@ public class DashboardActivity extends AppCompatActivity {
     AlertDialog.Builder userOptionDialog;
 
     User user;
+    ImageView userImage;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity {
         user = DB.getInstance(this).userDao().find(userLoggedId);
 
 
-        ImageView userImage = findViewById(R.id.user_image);
+        userImage = findViewById(R.id.user_image);
         ImageView userQr = findViewById(R.id.user_qr);
         TextView userName = findViewById(R.id.userName);
 
@@ -128,15 +132,6 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-//        final InputStream imageStream;
-//        try {
-//
-//            imageStream = getContentResolver().openInputStream(imageUri);
-//            final Bitmap userProfile = BitmapFactory.decodeStream(imageStream);
-//            userImage.setImageBitmap(userProfile);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
 
         if(SharedPref.getSharedPreferenceBoolean(this,"FIRST_VISIT", true)) {
             this.notificationDialog();
@@ -195,6 +190,23 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onResume() {
+        if(user.getImage() != null) {
+            Uri imageUri = Uri.parse(user.getImage());
+            Glide.with(this)
+                    .load(imageUri)
+                    .placeholder(R.drawable.user_image)
+                    .into(userImage);
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.user_image)
+                    .into(userImage);
+        }
+        super.onResume();
+    }
+
 
     public boolean checkPermissionForReadExtertalStorage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
