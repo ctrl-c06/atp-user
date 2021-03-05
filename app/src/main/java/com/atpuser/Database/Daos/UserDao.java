@@ -32,6 +32,10 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE phone_number =:phone_number")
     User findByPhone(String phone_number);
 
+    @Query("SELECT * FROM users WHERE username =:username")
+    User findByUsername(String username);
+
+
     @Query("SELECT count(*) FROM users WHERE firstname=:firstname AND middlename=:middlename AND lastname=:lastname AND date_of_birth=:birthdate")
     int isUserAlreadyExists(String firstname, String middlename, String lastname, String birthdate);
 }

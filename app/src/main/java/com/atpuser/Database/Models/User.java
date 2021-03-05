@@ -9,6 +9,7 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public String username;
     public String lastname;
     public String firstname;
     public String middlename;
@@ -35,6 +36,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastname() {
