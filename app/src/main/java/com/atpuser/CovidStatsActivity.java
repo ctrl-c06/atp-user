@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.atpuser.ContractModels.CovidStats.StatsResponse;
+import com.atpuser.ContractModels.CovidStats.SurigaoSurResponse;
 import com.atpuser.Contracts.ICovidStats;
 import com.atpuser.Helpers.SharedPref;
 
@@ -31,6 +33,7 @@ public class CovidStatsActivity extends AppCompatActivity {
 
     TextView philippinesConfirmedCase, philippinesRecovered, philippinesDeaths;
     TextView worldWideConfirmedCase, worldWideRecovered, worldWideDeaths;
+    TextView surigaoSurConfirmed, surigaoSurRecovered, surigaoSurDeaths;
 
     boolean hasInternet = false;
 
@@ -77,6 +80,10 @@ public class CovidStatsActivity extends AppCompatActivity {
         worldWideRecovered = findViewById(R.id.world_wide_recovered);
         worldWideDeaths = findViewById(R.id.world_wide_deaths);
 
+        surigaoSurConfirmed = findViewById(R.id.surigao_sur_confirmed);
+        surigaoSurRecovered = findViewById(R.id.surigao_sur_recovered);
+        surigaoSurDeaths = findViewById(R.id.surigao_sur_deaths);
+
         if(daysBetween(lastFetchedTime, currentTime) >= 1) {
             askUserTofetchData();
         } else { // Not passed by days
@@ -84,12 +91,17 @@ public class CovidStatsActivity extends AppCompatActivity {
         }
 
 
-
+        findViewById(R.id.btnNewUpdate).setOnClickListener(v -> fetchStats());
 
     }
 
     private void checkIfDataStatsIsPresent() {
         int checkSum = 0;
+
+        checkSum += SharedPref.getSharedPreferenceLong(this, "SURIGAO_CONFIRMED", 0);
+        checkSum += SharedPref.getSharedPreferenceLong(this, "SURIGAO_RECOVERED", 0);
+        checkSum += SharedPref.getSharedPreferenceLong(this, "SURIGAO_DEATHS", 0);
+
         checkSum += SharedPref.getSharedPreferenceLong(this, "WORLDWIDE_CONFIRM", 0);
         checkSum += SharedPref.getSharedPreferenceLong(this, "WORLDWIDE_RECOVERED", 0);
         checkSum += SharedPref.getSharedPreferenceLong(this, "WORLDWIDE_DEATHS", 0);
@@ -215,6 +227,57 @@ public class CovidStatsActivity extends AppCompatActivity {
                  SharedPref.setSharedPreferenceLong(getApplicationContext(), "PHILIPPINES_RECOVERED", statsResponse.getCases().getRecovered());
                  SharedPref.setSharedPreferenceLong(getApplicationContext(), "PHILIPPINES_DEATHS", statsResponse.getCases().getDeaths());
 
+
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .build();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(getString(R.string.base_url))
+                        .client(okHttpClient)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                ICovidStats surigaoSurService = retrofit.create(ICovidStats.class);
+                Call<SurigaoSurResponse> surigaoSurResponseCall = surigaoSurService.getStat();
+                surigaoSurResponseCall.enqueue(new Callback<SurigaoSurResponse>() {
+                    @Override
+                    public void onResponse(Call<SurigaoSurResponse> call, Response<SurigaoSurResponse> response) {
+
+                        surigaoSurConfirmed.setText(
+                                String.format("" +
+                                                "%s",
+                                        NumberFormat.getInstance().format(response.body().getConfirmed())
+                                )
+                        );
+
+                        surigaoSurRecovered.setText(
+                                String.format("" +
+                                                "%s",
+                                        NumberFormat.getInstance().format(response.body().getRecovered())
+                                )
+                        );
+
+                        surigaoSurDeaths.setText(
+                                String.format("" +
+                                                "%s",
+                                        NumberFormat.getInstance().format(response.body().getDeaths())
+                                )
+                        );
+
+
+                        SharedPref.setSharedPreferenceLong(getApplicationContext(), "SURIGAO_CONFIRM", response.body().getConfirmed());
+                        SharedPref.setSharedPreferenceLong(getApplicationContext(), "SURIGAO_RECOVERED", response.body().getRecovered());
+                        SharedPref.setSharedPreferenceLong(getApplicationContext(), "SURIGAO_DEATHS", response.body().getDeaths());
+                    }
+
+                    @Override
+                    public void onFailure(Call<SurigaoSurResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+
                 progressDialog.dismiss();
 
             }
@@ -222,50 +285,12 @@ public class CovidStatsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StatsResponse> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(CovidStatsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
 
-    public boolean internetIsConnected() {
-        try {
-            String command = "ping -c 1 google.com";
-            return (Runtime.getRuntime().exec(command).waitFor() == 0);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private class runOnBackground extends AsyncTask<Void , Integer , Void> {
-
-        private WeakReference<CovidStatsActivity> activityReference;
-
-        // Only retain a weak reference to the activity
-        runOnBackground(CovidStatsActivity context) {
-            activityReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected void onPreExecute() {
-           hasInternet = internetIsConnected();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if(hasInternet) {
-                fetchStats();
-            }
-
-        }
-
-    }
 
 
 }

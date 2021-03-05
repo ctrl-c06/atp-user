@@ -95,7 +95,8 @@
                     />
 
                 <TextView
-                    android:text="1,133"
+                    android:id="@+id/surigao_sur_confirmed"
+                    android:text="-"
                     android:textAlignment="center"
                     android:textSize="30sp"
                     android:textColor="#FFFFFF"
@@ -129,7 +130,8 @@
                     />
 
                 <TextView
-                    android:text="863"
+                    android:id="@+id/surigao_sur_recovered"
+                    android:text="-"
                     android:textAlignment="center"
                     android:textSize="30sp"
                     android:textColor="#FFFFFF"
@@ -163,7 +165,8 @@
                     />
 
                 <TextView
-                    android:text="59"
+                    android:id="@+id/surigao_sur_deaths"
+                    android:text="-"
                     android:textAlignment="center"
                     android:textSize="30sp"
                     android:textColor="#FFFFFF"
@@ -428,15 +431,17 @@
             </LinearLayout>
 
 
+            <Button
+                android:id="@+id/btnNewUpdate"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentBottom="true"
+                android:text="GET NEW UPDATE"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
-
-
-
-
-
-
-
-
 
 
 
